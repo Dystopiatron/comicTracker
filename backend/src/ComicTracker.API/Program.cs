@@ -82,6 +82,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IComicService, ComicService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 // Controllers
 builder.Services.AddControllers();
@@ -168,6 +169,9 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ComicTrackerDbContext>();
+    var adminService = scope.ServiceProvider.GetRequiredService<IAdminService>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    
     try
     {
         context.Database.EnsureCreated();
@@ -177,11 +181,13 @@ using (var scope = app.Services.CreateScope())
         {
             context.Database.Migrate();
         }
+
+        // Ensure admin user exists
+        await adminService.EnsureAdminUserExistsAsync();
     }
     catch (Exception ex)
     {
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while creating/updating the database.");
+        logger.LogError(ex, "An error occurred while creating/updating the database or seeding admin user.");
     }
 }
 

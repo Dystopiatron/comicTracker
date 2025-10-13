@@ -8,6 +8,7 @@ namespace comicTracker.Models
         public string LastName { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public string? AvatarUrl { get; set; }
+        public bool IsAdmin { get; set; } = false;
         
         // Navigation properties
         public virtual ICollection<Comic> Comics { get; set; } = new List<Comic>();

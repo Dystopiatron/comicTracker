@@ -9,6 +9,8 @@ namespace comicTracker.DTOs
         public string LastName { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; }
         public string? AvatarUrl { get; set; }
+        public bool IsAdmin { get; set; }
+        public int ComicCount { get; set; }
     }
 
     public class UpdateUserProfileRequest
@@ -37,5 +39,28 @@ namespace comicTracker.DTOs
     public class ConditionBreakdown
     {
         public Dictionary<string, int> Conditions { get; set; } = new Dictionary<string, int>();
+    }
+
+    public class AdminUserUpdateRequest
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+        public bool IsAdmin { get; set; }
+        public string? AvatarUrl { get; set; }
+    }
+
+    public class UserWithComicsDto
+    {
+        public int Id { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public DateTime DateCreated { get; set; }
+        public string? AvatarUrl { get; set; }
+        public bool IsAdmin { get; set; }
+        public List<ComicDto> Comics { get; set; } = new List<ComicDto>();
     }
 }

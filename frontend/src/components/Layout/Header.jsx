@@ -33,12 +33,18 @@ const Header = () => {
           <div className="d-flex align-items-center gap-3">
             {isAuthenticated ? (
               <>
-                <span className="text-muted">Welcome, {user?.firstName || user?.username}!</span>
+                <span className="text-muted">Welcome, {user?.firstName || user?.firstname || user?.username || 'User'}!</span>
                 <nav className="d-flex gap-3">
                   <Link to="/" className="btn btn-outline btn-sm">Home</Link>
                   <Link to="/collection" className="btn btn-outline btn-sm">Collection</Link>
                   <Link to="/stats" className="btn btn-outline btn-sm">Statistics</Link>
                   <Link to="/profile" className="btn btn-outline btn-sm">Profile</Link>
+                  {user?.isAdmin && (
+                    <Link to="/admin" className="btn btn-warning btn-sm">
+                      <i className="bi bi-shield-check me-1"></i>
+                      Admin
+                    </Link>
+                  )}
                 </nav>
                 <button onClick={handleLogout} className="btn btn-secondary btn-sm">
                   Logout

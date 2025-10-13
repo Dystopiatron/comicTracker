@@ -12,6 +12,7 @@ import AddComicPage from './pages/AddComicPage';
 import EditComicPage from './pages/EditComicPage';
 import ProfilePage from './pages/ProfilePage';
 import StatsPage from './pages/StatsPage';
+import AdminDashboard from './pages/AdminDashboard';
 import './styles/App.css';
 
 // Component to handle protected/public route logic
@@ -59,6 +60,11 @@ const AppRoutes = () => {
       <Route path="/stats" element={
         <ProtectedRoute>
           <StatsPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin" element={
+        <ProtectedRoute>
+          <AdminDashboard />
         </ProtectedRoute>
       } />
       
