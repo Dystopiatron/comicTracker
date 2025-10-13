@@ -1,0 +1,171 @@
+# Development Configuration
+
+This file contains important setup information for the Comic Tracker project to assist with development and troubleshooting.
+
+## Project Structure
+```
+comicTracker/
+├── backend/                     # ASP.NET Core Web API (.NET 9.0)
+│   ├── ComicTracker.sln         # Solution file
+│   └── src/
+│       └── ComicTracker.API/    # Main API project
+└── frontend/                    # React 19.2.0 application
+```
+
+## Development Environment Setup
+
+### Current Running Services
+- **Backend API**: Running on Terminal 1
+  - URL: `http://localhost:8000` (HTTP)
+  - URL: `https://localhost:8001` (HTTPS)
+  - Swagger UI: `http://localhost:8000/`
+  - Command: `cd backend && dotnet run --project src/ComicTracker.API`
+
+- **Frontend React App**: Running on Terminal 2
+  - URL: `http://localhost:3000`
+  - Command: `cd frontend && npm start`
+
+### API Configuration
+- **Port**: 8000 (HTTP), 8001 (HTTPS)
+- **Database**: SQLite (local development)
+- **Authentication**: JWT Bearer tokens
+- **CORS**: Configured for `http://localhost:3000`
+
+### Frontend Configuration
+- **API Base URL**: `http://localhost:8000/api`
+- **Port**: 3000 (React dev server)
+- **Framework**: React 19.2.0 with React Router
+
+## Demo Credentials
+- **Username**: `comicfan`
+- **Password**: `MyComics2024`
+- **Email**: `fan@comictracker.com`
+
+### Alternative Demo User (if browser blocks the above)
+- **Username**: `demouser`
+- **Password**: `Demo123!`
+- **Email**: `demo@comictracker.com`
+
+## Development Commands
+
+### Backend Commands
+```bash
+# Navigate to backend
+cd backend
+
+# Restore packages
+dotnet restore
+
+# Build
+dotnet build
+
+# Run API
+dotnet run --project src/ComicTracker.API
+
+# Run with specific environment
+ASPNETCORE_ENVIRONMENT=Development dotnet run --project src/ComicTracker.API
+```
+
+### Frontend Commands
+```bash
+# Navigate to frontend
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+# Build for production
+npm run build
+
+# Run tests
+npm test
+```
+
+### Quick Start (Alternative)
+```bash
+# Use the provided script for convenience
+./dev-start.sh backend    # Start only backend
+./dev-start.sh frontend   # Start only frontend  
+./dev-start.sh both       # Start both services
+```
+
+## Key Configuration Files
+
+### Backend
+- `backend/src/ComicTracker.API/Properties/launchSettings.json` - Port configuration
+- `backend/src/ComicTracker.API/appsettings.json` - App settings
+- `backend/src/ComicTracker.API/appsettings.Development.json` - Dev settings
+- `backend/src/ComicTracker.API/Program.cs` - Startup configuration
+
+### Frontend
+- `frontend/package.json` - Dependencies and scripts
+- `frontend/src/services/api.js` - API base URL configuration
+- `frontend/src/context/AuthContext.jsx` - Authentication state management
+
+## Project Status Notes
+
+### Recent Fixes Applied
+- ✅ Fixed logout functionality (AuthContext isAuthenticated boolean issue)
+- ✅ Configured API to run on port 8000
+- ✅ Updated frontend API calls to use port 8000
+- ✅ Restructured project from nested confusion to clean backend/frontend separation
+- ✅ Cleaned up duplicate/corrupted README files - single README.md at root
+- ✅ Fixed login 401 error - corrected demo credentials from testuser/TestPass123 to demouser/Demo123!
+- ✅ Enhanced API client to not send auth headers for login/register endpoints
+
+### Current Issues
+- None known at this time
+
+### Development Notes
+- Both services are typically running during development
+- Hot reload is enabled for both React (frontend) and .NET (backend with `dotnet watch run`)
+- CORS is properly configured between services
+- JWT authentication is working properly
+- SQLite database auto-creates on first run
+
+## Terminal Commands for Assistance
+
+### Helpful Terminal Commands (when services are not running)
+```bash
+# Check if ports are in use
+lsof -i :8000  # Backend port
+lsof -i :3000  # Frontend port
+
+# Kill processes on ports if needed
+kill -9 $(lsof -t -i:8000)
+kill -9 $(lsof -t -i:3000)
+
+# Check .NET version
+dotnet --version
+
+# Check Node.js version
+node --version
+npm --version
+```
+
+### Build Verification
+```bash
+# Test backend builds
+cd backend && dotnet build
+
+# Test frontend builds
+cd frontend && npm run build
+```
+
+## Important Notes for AI Assistance
+
+- **Services Running**: Both backend and frontend are typically running in separate terminals
+- **No Need to Start Services**: Focus on code changes and debugging rather than starting/stopping services
+- **Live Testing**: Changes can be tested immediately due to hot reload
+- **Port Configuration**: Backend uses 8000, frontend uses 3000
+- **Database**: SQLite auto-creates, no manual setup needed
+- **Authentication**: JWT tokens stored in localStorage
+
+---
+
+**Last Updated**: October 13, 2025
+**Project Status**: Active Development
+**Setup Verified**: ✅ Backend builds, ✅ Frontend builds, ✅ Services communicate properly

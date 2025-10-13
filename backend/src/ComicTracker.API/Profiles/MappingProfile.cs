@@ -1,0 +1,39 @@
+using AutoMapper;
+using comicTracker.DTOs;
+using comicTracker.Models;
+
+namespace comicTracker.Profiles
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            // User mappings
+            CreateMap<ApplicationUser, UserDto>();
+            CreateMap<UpdateUserProfileRequest, ApplicationUser>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.UserName, opt => opt.Ignore())
+                .ForMember(dest => dest.Email, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore());
+
+            // Comic mappings
+            CreateMap<Comic, ComicDto>()
+                .ForMember(dest => dest.Condition, opt => opt.MapFrom(src => src.Condition.ToString()));
+            
+            CreateMap<CreateComicRequest, Comic>()
+                .ConstructUsing(_ => new Comic())
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                .ForMember(dest => dest.DateAdded, opt => opt.Ignore())
+                .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore());
+            
+            CreateMap<UpdateComicRequest, Comic>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                .ForMember(dest => dest.DateAdded, opt => opt.Ignore())
+                .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore());
+        }
+    }
+}
