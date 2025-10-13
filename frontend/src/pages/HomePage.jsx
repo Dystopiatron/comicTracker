@@ -62,7 +62,7 @@ const HomePage = () => {
         <div className="text-center mb-4">
           <h1>Welcome to Comic Tracker</h1>
           <p className="text-muted">
-            {user ? `Hello, ${user.firstName || user.firstname || user.username || 'User'}! Here's your collection overview.` : 'Manage and track your comic book collection.'}
+            {user ? `Hello, ${user.data?.firstName || user.firstName || user.firstname || user.data?.username || user.username || 'User'}! Here's your collection overview.` : 'Manage and track your comic book collection.'}
           </p>
         </div>
 
