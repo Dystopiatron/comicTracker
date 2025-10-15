@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using comicTracker.Data;
 
 #nullable disable
@@ -15,25 +16,31 @@ namespace comicTracker.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -48,16 +55,18 @@ namespace comicTracker.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -70,16 +79,18 @@ namespace comicTracker.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -91,16 +102,16 @@ namespace comicTracker.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -112,10 +123,10 @@ namespace comicTracker.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -127,16 +138,16 @@ namespace comicTracker.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -147,74 +158,76 @@ namespace comicTracker.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("AvatarUrl")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<bool>("IsAdmin")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -232,8 +245,8 @@ namespace comicTracker.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d2ece528-4e6c-4b84-b4e8-5a26ca03cfc9",
-                            DateCreated = new DateTime(2025, 10, 13, 20, 23, 26, 559, DateTimeKind.Utc).AddTicks(1220),
+                            ConcurrencyStamp = "4fa83748-5939-415f-9a09-203360e43f74",
+                            DateCreated = new DateTime(2025, 10, 15, 18, 10, 55, 725, DateTimeKind.Utc).AddTicks(8470),
                             Email = "demo@comictracker.com",
                             EmailConfirmed = true,
                             FirstName = "Demo",
@@ -242,9 +255,9 @@ namespace comicTracker.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DEMO@COMICTRACKER.COM",
                             NormalizedUserName = "DEMOUSER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBUaTbyAzJjnDDaoPHtzoV0FtFoiCHKJel+LgplcVUQL2SOyCQcb9CmQKebf4bKAiw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBboDrFKqqKAID9Xb7ARRDmAVVIu2narJCMFsXVMY2b99r0xHXNJlogMeaPjXFzHyg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b5633878-3bdb-4d46-82b2-93dc8f613148",
+                            SecurityStamp = "7a5434c0-1c23-439c-85f1-24a001c35a59",
                             TwoFactorEnabled = false,
                             UserName = "demouser"
                         },
@@ -252,8 +265,8 @@ namespace comicTracker.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ddf4257b-77ce-4200-abda-8b8792e726a0",
-                            DateCreated = new DateTime(2025, 10, 13, 20, 23, 26, 590, DateTimeKind.Utc).AddTicks(5580),
+                            ConcurrencyStamp = "b803ce2c-6ca4-4a64-b6f4-0bbc80cf65e9",
+                            DateCreated = new DateTime(2025, 10, 15, 18, 10, 55, 757, DateTimeKind.Utc).AddTicks(4000),
                             Email = "fan@comictracker.com",
                             EmailConfirmed = true,
                             FirstName = "Comic",
@@ -262,9 +275,9 @@ namespace comicTracker.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "FAN@COMICTRACKER.COM",
                             NormalizedUserName = "COMICFAN",
-                            PasswordHash = "AQAAAAIAAYagAAAAELRxRgj2C5XX8feV3hxAlQd+zfF6u8xGjNt+jqwN2A0BuPBXvkCvprNeONWe+0o0xg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP+guLaiu3wswHgs/0eeW50jai/kWotsYzR83GAsqeepaUUi/5/LJVQ7SHyrxd7pBA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62274109-45a1-488c-b7a2-e4cc5828fb6b",
+                            SecurityStamp = "05877fe9-48d9-41ea-af5a-fc347a820c5e",
                             TwoFactorEnabled = false,
                             UserName = "comicfan"
                         });
@@ -274,34 +287,36 @@ namespace comicTracker.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Condition")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("CoverImageUrl")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime>("DateAdded")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DateModified")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("IssueNumber")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<string>("Publisher")
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<decimal?>("PurchasePrice")
                         .HasColumnType("decimal(18,2)");
@@ -309,10 +324,10 @@ namespace comicTracker.Migrations
                     b.Property<string>("SeriesName")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -329,7 +344,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 1,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 9, 13, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4010),
+                            DateAdded = new DateTime(2025, 9, 15, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8170),
                             IssueNumber = "#300",
                             Notes = "First appearance of Venom",
                             Publisher = "Marvel",
@@ -341,7 +356,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 2,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 9, 18, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4020),
+                            DateAdded = new DateTime(2025, 9, 20, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8180),
                             IssueNumber = "#1",
                             Notes = "Classic Batman issue",
                             Publisher = "DC",
@@ -353,7 +368,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 3,
                             Condition = "Mint",
-                            DateAdded = new DateTime(2025, 9, 23, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4020),
+                            DateAdded = new DateTime(2025, 9, 25, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8180),
                             IssueNumber = "#1",
                             Notes = "First issue of the series",
                             Publisher = "Image",
@@ -365,7 +380,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 4,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 9, 28, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4020),
+                            DateAdded = new DateTime(2025, 9, 30, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8180),
                             IssueNumber = "#1",
                             Notes = "First X-Men comic",
                             Publisher = "Marvel",
@@ -377,7 +392,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 5,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 10, 3, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4020),
+                            DateAdded = new DateTime(2025, 10, 5, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8190),
                             IssueNumber = "#1",
                             Notes = "Man of Steel",
                             Publisher = "DC",
@@ -389,7 +404,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 6,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 7, 5, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4020),
+                            DateAdded = new DateTime(2025, 7, 7, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8190),
                             IssueNumber = "#300",
                             Notes = "Classic black suit issue",
                             Publisher = "Marvel",
@@ -401,7 +416,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 7,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 7, 10, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4030),
+                            DateAdded = new DateTime(2025, 7, 12, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8190),
                             IssueNumber = "#1",
                             Notes = "Iconic Joker story",
                             Publisher = "DC",
@@ -413,7 +428,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 8,
                             Condition = "Mint",
-                            DateAdded = new DateTime(2025, 7, 15, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4030),
+                            DateAdded = new DateTime(2025, 7, 17, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8190),
                             IssueNumber = "#1",
                             Notes = "First issue of acclaimed series",
                             Publisher = "Image",
@@ -425,7 +440,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 9,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 7, 20, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4030),
+                            DateAdded = new DateTime(2025, 7, 22, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8200),
                             IssueNumber = "#1",
                             Notes = "Seminal graphic novel",
                             Publisher = "DC",
@@ -437,7 +452,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 10,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 7, 25, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4030),
+                            DateAdded = new DateTime(2025, 7, 27, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8200),
                             IssueNumber = "#1",
                             Notes = "First zombie apocalypse issue",
                             Publisher = "Image",
@@ -449,7 +464,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 11,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 7, 30, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4030),
+                            DateAdded = new DateTime(2025, 8, 1, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8260),
                             IssueNumber = "#141",
                             Notes = "Days of Future Past begins",
                             Publisher = "Marvel",
@@ -461,7 +476,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 12,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 8, 4, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4040),
+                            DateAdded = new DateTime(2025, 8, 6, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8260),
                             IssueNumber = "#1",
                             Notes = "Hellboy's first appearance",
                             Publisher = "Dark Horse",
@@ -473,7 +488,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 13,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 8, 9, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4040),
+                            DateAdded = new DateTime(2025, 8, 11, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8260),
                             IssueNumber = "#1",
                             Notes = "First TMNT appearance",
                             Publisher = "Mirage Studios",
@@ -485,7 +500,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 14,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 8, 14, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4040),
+                            DateAdded = new DateTime(2025, 8, 16, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8260),
                             IssueNumber = "#1",
                             Notes = "Neil Gaiman masterpiece",
                             Publisher = "Vertigo",
@@ -497,7 +512,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 15,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 8, 19, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4040),
+                            DateAdded = new DateTime(2025, 8, 21, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8260),
                             IssueNumber = "#1",
                             Notes = "Post-apocalyptic drama",
                             Publisher = "Vertigo",
@@ -509,7 +524,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 16,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 8, 24, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4040),
+                            DateAdded = new DateTime(2025, 8, 26, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8270),
                             IssueNumber = "#1",
                             Notes = "Jeff Smith's epic fantasy",
                             Publisher = "Cartoon Books",
@@ -521,7 +536,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 17,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 8, 29, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4040),
+                            DateAdded = new DateTime(2025, 8, 31, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8270),
                             IssueNumber = "#1",
                             Notes = "Pulitzer Prize winner",
                             Publisher = "Pantheon Books",
@@ -533,7 +548,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 18,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 9, 3, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4050),
+                            DateAdded = new DateTime(2025, 9, 5, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8270),
                             IssueNumber = "#1",
                             Notes = "Garth Ennis classic",
                             Publisher = "Vertigo",
@@ -545,7 +560,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 19,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 9, 8, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4050),
+                            DateAdded = new DateTime(2025, 9, 10, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8270),
                             IssueNumber = "#1",
                             Notes = "Robert Kirkman superhero saga",
                             Publisher = "Image",
@@ -557,7 +572,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 20,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 9, 13, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4050),
+                            DateAdded = new DateTime(2025, 9, 15, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8270),
                             IssueNumber = "#48",
                             Notes = "First Silver Surfer",
                             Publisher = "Marvel",
@@ -569,7 +584,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 21,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 9, 18, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4050),
+                            DateAdded = new DateTime(2025, 9, 20, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8270),
                             IssueNumber = "#1",
                             Notes = "Alan Moore dystopian tale",
                             Publisher = "Vertigo",
@@ -581,7 +596,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 22,
                             Condition = "Fair",
-                            DateAdded = new DateTime(2025, 9, 23, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4050),
+                            DateAdded = new DateTime(2025, 9, 25, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8270),
                             IssueNumber = "#181",
                             Notes = "First Wolverine appearance",
                             Publisher = "Marvel",
@@ -593,7 +608,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 23,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 9, 28, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4050),
+                            DateAdded = new DateTime(2025, 9, 30, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8280),
                             IssueNumber = "#1",
                             Notes = "Katsuhiro Otomo cyberpunk",
                             Publisher = "Marvel Epic",
@@ -605,7 +620,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 24,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 10, 3, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4060),
+                            DateAdded = new DateTime(2025, 10, 5, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8280),
                             IssueNumber = "#1",
                             Notes = "Todd McFarlane creation",
                             Publisher = "Image",
@@ -617,7 +632,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 25,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 8, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4060),
+                            DateAdded = new DateTime(2025, 10, 10, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8280),
                             IssueNumber = "#1",
                             Notes = "Warren Ellis cyberpunk journalism",
                             Publisher = "Vertigo",
@@ -629,7 +644,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 26,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 9, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4060),
+                            DateAdded = new DateTime(2025, 10, 11, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8280),
                             IssueNumber = "#2",
                             Notes = "On the Stump. Spider Jerusalem covers a political rally.",
                             Publisher = "Vertigo",
@@ -641,7 +656,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 27,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 10, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4060),
+                            DateAdded = new DateTime(2025, 10, 12, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8280),
                             IssueNumber = "#3",
                             Notes = "Wild in the Country. Spider investigates cryogenic revivals.",
                             Publisher = "Vertigo",
@@ -653,7 +668,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 28,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 11, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4060),
+                            DateAdded = new DateTime(2025, 10, 13, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8290),
                             IssueNumber = "#4",
                             Notes = "New City. Spider explores the city's underbelly.",
                             Publisher = "Vertigo",
@@ -665,7 +680,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 29,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 12, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4070),
+                            DateAdded = new DateTime(2025, 10, 14, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8290),
                             IssueNumber = "#5",
                             Notes = "What Spider Watches on TV. Media criticism and satire.",
                             Publisher = "Vertigo",
@@ -677,7 +692,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 30,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 13, 20, 23, 26, 623, DateTimeKind.Utc).AddTicks(4070),
+                            DateAdded = new DateTime(2025, 10, 15, 18, 10, 55, 788, DateTimeKind.Utc).AddTicks(8290),
                             IssueNumber = "#6",
                             Notes = "God Riding Shotgun. Spider investigates new religious movements.",
                             Publisher = "Vertigo",
@@ -689,7 +704,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 31,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 13, 21, 23, 26, 623, DateTimeKind.Utc).AddTicks(4070),
+                            DateAdded = new DateTime(2025, 10, 15, 19, 10, 55, 788, DateTimeKind.Utc).AddTicks(8290),
                             IssueNumber = "#7",
                             Notes = "My Boyfriend is a Virus. Exploration of transhumanism.",
                             Publisher = "Vertigo",
@@ -701,7 +716,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 32,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 13, 22, 23, 26, 623, DateTimeKind.Utc).AddTicks(4070),
+                            DateAdded = new DateTime(2025, 10, 15, 20, 10, 55, 788, DateTimeKind.Utc).AddTicks(8290),
                             IssueNumber = "#8",
                             Notes = "Another Cold Morning. More on cryogenic revivals and societal change.",
                             Publisher = "Vertigo",
@@ -713,7 +728,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 33,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 13, 23, 23, 26, 623, DateTimeKind.Utc).AddTicks(4070),
+                            DateAdded = new DateTime(2025, 10, 15, 21, 10, 55, 788, DateTimeKind.Utc).AddTicks(8290),
                             IssueNumber = "#9",
                             Notes = "Party Time. Spider attends a political convention.",
                             Publisher = "Vertigo",
@@ -725,7 +740,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 34,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 14, 0, 23, 26, 623, DateTimeKind.Utc).AddTicks(4070),
+                            DateAdded = new DateTime(2025, 10, 15, 22, 10, 55, 788, DateTimeKind.Utc).AddTicks(8300),
                             IssueNumber = "#10",
                             Notes = "Freeze Me with Your Kiss. Exploration of future cryogenic technology.",
                             Publisher = "Vertigo",

@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Database configuration
 builder.Services.AddDbContext<ComicTrackerDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Identity configuration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>

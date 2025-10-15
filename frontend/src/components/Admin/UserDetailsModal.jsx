@@ -84,7 +84,7 @@ const UserDetailsModal = ({ user, show, onHide }) => {
                       <div className="col-6">
                         <h4 className="text-success">
                           {user?.comics ? 
-                            [...new Set(user.comics.map(comic => comic.publisher))].length : 0
+                            [...new Set(user.comics.map(comic => comic.publisher).filter(p => p))].length : 0
                           }
                         </h4>
                         <small className="text-muted">Publishers</small>
@@ -121,13 +121,10 @@ const UserDetailsModal = ({ user, show, onHide }) => {
                           <tr key={comic.id}>
                             <td>
                               <div>
-                                <div className="fw-bold">{comic.title}</div>
-                                {comic.series && (
-                                  <small className="text-muted">{comic.series}</small>
-                                )}
+                                <div className="fw-bold">{comic.seriesName}</div>
                               </div>
                             </td>
-                            <td>#{comic.issueNumber}</td>
+                            <td>{comic.issueNumber}</td>
                             <td>
                               <span className="badge bg-light text-dark">{comic.publisher}</span>
                             </td>
