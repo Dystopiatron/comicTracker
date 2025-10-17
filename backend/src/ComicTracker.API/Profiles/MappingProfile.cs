@@ -10,9 +10,14 @@ namespace comicTracker.Profiles
         {
             // User mappings
             CreateMap<ApplicationUser, UserDto>()
-                .ForMember(dest => dest.ComicCount, opt => opt.MapFrom(src => src.Comics.Count));
+                .ForMember(dest => dest.ComicCount, opt => opt.MapFrom(src => src.Comics.Count))
+                .ForMember(dest => dest.IsAdmin, opt => opt.MapFrom(src => src.IsAdmin))
+                .ForMember(dest => dest.RoleDisplayName, opt => opt.Ignore())
+                .ForMember(dest => dest.Permissions, opt => opt.Ignore());
             
-            CreateMap<ApplicationUser, UserWithComicsDto>();
+            CreateMap<ApplicationUser, UserWithComicsDto>()
+                .ForMember(dest => dest.IsAdmin, opt => opt.MapFrom(src => src.IsAdmin))
+                .ForMember(dest => dest.RoleDisplayName, opt => opt.Ignore());
             
             CreateMap<UpdateUserProfileRequest, ApplicationUser>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())

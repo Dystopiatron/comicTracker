@@ -25,7 +25,14 @@ const UserManagement = () => {
       
       const response = await adminService.getAllUsers();
       if (response.success) {
-        setUsers(response.data);
+        // Handle nested response structure: response.data.data contains the users array
+        const usersData = response.data.data || response.data;
+        if (Array.isArray(usersData)) {
+          setUsers(usersData);
+        } else {
+          console.error('Expected users array but got:', usersData);
+          setError('Invalid response format from server');
+        }
       } else {
         setError(response.message || 'Failed to fetch users');
       }
@@ -51,7 +58,9 @@ const UserManagement = () => {
     try {
       const response = await adminService.getUserWithComics(user.id);
       if (response.success) {
-        setSelectedUser(response.data);
+        // Handle nested response structure: response.data.data contains the user object
+        const userData = response.data.data || response.data;
+        setSelectedUser(userData);
         setShowDetailsModal(true);
       } else {
         setError(response.message || 'Failed to fetch user details');
@@ -74,10 +83,10 @@ const UserManagement = () => {
     fetchUsers();
   };
 
-  const filteredUsers = users.filter(user =>
+  const filteredUsers = Array.isArray(users) ? users.filter(user =>
     (user.username || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
     (user.email || '').toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ) : [];
 
   if (loading) {
     return (
@@ -170,8 +179,15 @@ const UserManagement = () => {
                           <div className="me-2">👤</div>
                           <div>
                             <div className="fw-bold">{user.username || user.email || 'Unknown User'}</div>
-                            {user.isAdmin && (
-                              <span className="badge bg-warning text-dark mt-1">Admin</span>
+                            {(user.isAdmin || (user.role && user.role !== 'User')) && (
+                              <span className={`badge mt-1 ${
+                                user.role === 'SuperAdmin' ? 'bg-danger' :
+                                user.role === 'Admin' ? 'bg-warning text-dark' :
+                                user.role === 'Moderator' ? 'bg-info' :
+                                'bg-warning text-dark'
+                              }`}>
+                                {user.roleDisplayName || user.role || 'Admin'}
+                              </span>
                             )}
                           </div>
                         </div>

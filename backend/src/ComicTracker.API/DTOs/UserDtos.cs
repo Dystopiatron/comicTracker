@@ -1,3 +1,5 @@
+using comicTracker.Models;
+
 namespace comicTracker.DTOs
 {
     public class UserDto
@@ -9,8 +11,11 @@ namespace comicTracker.DTOs
         public string LastName { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; }
         public string? AvatarUrl { get; set; }
-        public bool IsAdmin { get; set; }
+        public UserRole Role { get; set; }
+        public string RoleDisplayName { get; set; } = string.Empty;
+        public bool IsAdmin { get; set; } // Legacy support
         public int ComicCount { get; set; }
+        public List<string> Permissions { get; set; } = new List<string>();
     }
 
     public class UpdateUserProfileRequest
@@ -47,7 +52,7 @@ namespace comicTracker.DTOs
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
-        public bool IsAdmin { get; set; }
+        public UserRole Role { get; set; }
         public string? AvatarUrl { get; set; }
     }
 
@@ -60,7 +65,22 @@ namespace comicTracker.DTOs
         public string LastName { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; }
         public string? AvatarUrl { get; set; }
-        public bool IsAdmin { get; set; }
+        public UserRole Role { get; set; }
+        public string RoleDisplayName { get; set; } = string.Empty;
+        public bool IsAdmin { get; set; } // Legacy support
         public List<ComicDto> Comics { get; set; } = new List<ComicDto>();
+    }
+
+    public class PromoteUserRequest
+    {
+        public UserRole NewRole { get; set; }
+        public string? Reason { get; set; }
+    }
+
+    public class RoleInfoDto
+    {
+        public UserRole Role { get; set; }
+        public string DisplayName { get; set; } = string.Empty;
+        public List<string> Permissions { get; set; } = new List<string>();
     }
 }

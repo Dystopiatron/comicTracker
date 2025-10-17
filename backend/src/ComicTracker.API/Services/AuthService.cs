@@ -1,10 +1,13 @@
 using comicTracker.DTOs;
 using comicTracker.Models;
+using comicTracker.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Cryptography;
 using AutoMapper;
 
 namespace comicTracker.Services
@@ -13,6 +16,8 @@ namespace comicTracker.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ComicTrackerDbContext _context;
+        private readonly IRolePermissionService _rolePermissionService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly ILogger<AuthService> _logger;
@@ -20,12 +25,16 @@ namespace comicTracker.Services
         public AuthService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            ComicTrackerDbContext context,
+            IRolePermissionService rolePermissionService,
             IConfiguration configuration,
             IMapper mapper,
             ILogger<AuthService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
+            _rolePermissionService = rolePermissionService;
             _configuration = configuration;
             _mapper = mapper;
             _logger = logger;
@@ -81,15 +90,22 @@ namespace comicTracker.Services
                 }
 
                 // Generate JWT token
-                var token = await GenerateJwtToken(user);
-                var userDto = _mapper.Map<UserDto>(user);
+                var tokenExpiry = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:ExpirationMinutes"] ?? "60"));
+                var refreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+                
+                var token = await GenerateJwtToken(user, tokenExpiry);
+                var refreshToken = await GenerateRefreshToken(user, refreshTokenExpiry);
+                var userDto = MapUserToDto(user);
 
                 return new AuthResult
                 {
                     Success = true,
                     Message = "User registered successfully",
                     Token = token,
-                    User = userDto
+                    RefreshToken = refreshToken.Token,
+                    User = userDto,
+                    TokenExpiry = tokenExpiry,
+                    RefreshTokenExpiry = refreshTokenExpiry
                 };
             }
             catch (Exception ex)
@@ -130,15 +146,25 @@ namespace comicTracker.Services
                     };
                 }
 
-                var token = await GenerateJwtToken(user);
-                var userDto = _mapper.Map<UserDto>(user);
+                // Generate tokens
+                var tokenExpiry = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:ExpirationMinutes"] ?? "60"));
+                var refreshTokenExpiry = request.RememberMe ? 
+                    DateTime.UtcNow.AddDays(30) : 
+                    DateTime.UtcNow.AddDays(7);
+
+                var token = await GenerateJwtToken(user, tokenExpiry);
+                var refreshToken = await GenerateRefreshToken(user, refreshTokenExpiry);
+                var userDto = MapUserToDto(user);
 
                 return new AuthResult
                 {
                     Success = true,
                     Message = "Login successful",
                     Token = token,
-                    User = userDto
+                    RefreshToken = refreshToken.Token,
+                    User = userDto,
+                    TokenExpiry = tokenExpiry,
+                    RefreshTokenExpiry = refreshTokenExpiry
                 };
             }
             catch (Exception ex)
@@ -155,15 +181,57 @@ namespace comicTracker.Services
 
         public async Task<AuthResult> RefreshTokenAsync(string refreshToken)
         {
-            // For now, returning not implemented. 
-            // In a production app, you'd implement refresh token logic
-            await Task.CompletedTask;
-            return new AuthResult
+            try
             {
-                Success = false,
-                Message = "Refresh token not implemented",
-                Errors = new List<string> { "Feature not implemented" }
-            };
+                var storedToken = await _context.RefreshTokens
+                    .Include(rt => rt.User)
+                    .FirstOrDefaultAsync(rt => rt.Token == refreshToken);
+
+                if (storedToken == null || !storedToken.IsActive)
+                {
+                    return new AuthResult
+                    {
+                        Success = false,
+                        Message = "Invalid or expired refresh token",
+                        Errors = new List<string> { "Token not found or expired" }
+                    };
+                }
+
+                // Revoke the used refresh token
+                storedToken.IsRevoked = true;
+                storedToken.RevokedReason = "Used for token refresh";
+
+                // Generate new tokens
+                var tokenExpiry = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:ExpirationMinutes"] ?? "60"));
+                var refreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+
+                var newToken = await GenerateJwtToken(storedToken.User, tokenExpiry);
+                var newRefreshToken = await GenerateRefreshToken(storedToken.User, refreshTokenExpiry);
+                var userDto = MapUserToDto(storedToken.User);
+
+                await _context.SaveChangesAsync();
+
+                return new AuthResult
+                {
+                    Success = true,
+                    Message = "Token refreshed successfully",
+                    Token = newToken,
+                    RefreshToken = newRefreshToken.Token,
+                    User = userDto,
+                    TokenExpiry = tokenExpiry,
+                    RefreshTokenExpiry = refreshTokenExpiry
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred during token refresh");
+                return new AuthResult
+                {
+                    Success = false,
+                    Message = "An error occurred during token refresh",
+                    Errors = new List<string> { ex.Message }
+                };
+            }
         }
 
         public async Task<bool> LogoutAsync(string userId)
@@ -182,13 +250,13 @@ namespace comicTracker.Services
             }
         }
 
-        private async Task<string> GenerateJwtToken(ApplicationUser user)
+        private async Task<string> GenerateJwtToken(ApplicationUser user, DateTime? expiry = null)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
             var issuer = jwtSettings["Issuer"];
             var audience = jwtSettings["Audience"];
-            var expirationMinutes = int.Parse(jwtSettings["ExpirationMinutes"] ?? "60");
+            var tokenExpiry = expiry ?? DateTime.UtcNow.AddMinutes(int.Parse(jwtSettings["ExpirationMinutes"] ?? "60"));
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey!);
@@ -199,8 +267,15 @@ namespace comicTracker.Services
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Email, user.Email!),
                 new Claim("firstName", user.FirstName),
-                new Claim("lastName", user.LastName)
+                new Claim("lastName", user.LastName),
+                new Claim("isAdmin", user.IsAdmin.ToString().ToLower()),
+                new Claim("role", user.Role.ToString()),
+                new Claim("roleDisplayName", _rolePermissionService.GetRoleDisplayName(user.Role))
             };
+
+            // Add permission claims
+            var permissions = _rolePermissionService.GetPermissions(user.Role);
+            claims.AddRange(permissions.Select(permission => new Claim("permission", permission.ToString())));
 
             // Add user roles if any
             var roles = await _userManager.GetRolesAsync(user);
@@ -209,7 +284,7 @@ namespace comicTracker.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(expirationMinutes),
+                Expires = tokenExpiry,
                 Issuer = issuer,
                 Audience = audience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -217,6 +292,65 @@ namespace comicTracker.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        private async Task<RefreshToken> GenerateRefreshToken(ApplicationUser user, DateTime expiry)
+        {
+            var refreshToken = new RefreshToken
+            {
+                Token = GenerateSecureRandomToken(),
+                ExpiryDate = expiry,
+                UserId = user.Id
+            };
+
+            _context.RefreshTokens.Add(refreshToken);
+            await _context.SaveChangesAsync();
+
+            return refreshToken;
+        }
+
+        private static string GenerateSecureRandomToken()
+        {
+            using var rng = RandomNumberGenerator.Create();
+            var bytes = new byte[64];
+            rng.GetBytes(bytes);
+            return Convert.ToBase64String(bytes);
+        }
+
+        private UserDto MapUserToDto(ApplicationUser user)
+        {
+            var userDto = _mapper.Map<UserDto>(user);
+            userDto.RoleDisplayName = _rolePermissionService.GetRoleDisplayName(user.Role);
+            userDto.Permissions = _rolePermissionService.GetPermissions(user.Role)
+                .Select(p => p.ToString())
+                .ToList();
+            
+            return userDto;
+        }
+
+        public async Task<bool> RevokeRefreshTokenAsync(string refreshToken, string? reason = null)
+        {
+            try
+            {
+                var storedToken = await _context.RefreshTokens
+                    .FirstOrDefaultAsync(rt => rt.Token == refreshToken);
+
+                if (storedToken == null || storedToken.IsRevoked)
+                {
+                    return false;
+                }
+
+                storedToken.IsRevoked = true;
+                storedToken.RevokedReason = reason ?? "Manually revoked";
+                
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error revoking refresh token");
+                return false;
+            }
         }
     }
 }

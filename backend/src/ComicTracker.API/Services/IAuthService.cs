@@ -8,5 +8,6 @@ namespace comicTracker.Services
         Task<AuthResult> LoginAsync(LoginRequest request);
         Task<AuthResult> RefreshTokenAsync(string refreshToken);
         Task<bool> LogoutAsync(string userId);
+        Task<bool> RevokeRefreshTokenAsync(string refreshToken, string? reason = null);
     }
 }

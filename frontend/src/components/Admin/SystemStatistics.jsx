@@ -17,7 +17,9 @@ const SystemStatistics = () => {
       
       const response = await adminService.getSystemStatistics();
       if (response.success) {
-        setStats(response.data);
+        // Handle nested response structure: response.data.data contains the statistics
+        const statsData = response.data.data || response.data;
+        setStats(statsData);
       } else {
         setError(response.message || 'Failed to fetch statistics');
       }

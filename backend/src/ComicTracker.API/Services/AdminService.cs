@@ -20,12 +20,12 @@ namespace comicTracker.Services
             try
             {
                 // Check if any admin users exist
-                var adminExists = await _userManager.Users.AnyAsync(u => u.IsAdmin);
+                var adminExists = await _userManager.Users.AnyAsync(u => u.Role >= UserRole.Admin);
                 
                 if (!adminExists)
                 {
                     // Create default admin user
-                    var result = await CreateAdminUserAsync("admin", "admin@comictracker.com", "Admin123!");
+                    var result = await CreateAdminUserAsync("comicfan", "fan@comictracker.com", "Admin123!");
                     if (result)
                     {
                         _logger.LogInformation("Default admin user created successfully");
@@ -56,7 +56,7 @@ namespace comicTracker.Services
                     UserName = username,
                     Email = email,
                     EmailConfirmed = true,
-                    IsAdmin = true,
+                    Role = UserRole.Admin,
                     DateCreated = DateTime.UtcNow
                 };
 

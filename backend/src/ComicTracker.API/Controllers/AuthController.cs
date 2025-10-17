@@ -37,7 +37,13 @@ namespace comicTracker.Controllers
                 
                 if (result.Success)
                 {
-                    return Ok(ApiResponse<AuthResult>.SuccessResponse(result, "User registered successfully"));
+                    return Ok(ApiResponse<object>.SuccessResponse(new { 
+                        token = result.Token, 
+                        refreshToken = result.RefreshToken,
+                        user = result.User,
+                        tokenExpiry = result.TokenExpiry,
+                        refreshTokenExpiry = result.RefreshTokenExpiry
+                    }, "User registered successfully"));
                 }
 
                 return BadRequest(ApiResponse<object>.ErrorResponse(result.Message, result.Errors));
@@ -69,7 +75,13 @@ namespace comicTracker.Controllers
                 
                 if (result.Success)
                 {
-                    return Ok(ApiResponse<AuthResult>.SuccessResponse(result, "Login successful"));
+                    return Ok(ApiResponse<object>.SuccessResponse(new { 
+                        token = result.Token, 
+                        refreshToken = result.RefreshToken,
+                        user = result.User,
+                        tokenExpiry = result.TokenExpiry,
+                        refreshTokenExpiry = result.RefreshTokenExpiry
+                    }, "Login successful"));
                 }
 
                 return Unauthorized(ApiResponse<object>.ErrorResponse(result.Message, result.Errors));
@@ -100,7 +112,13 @@ namespace comicTracker.Controllers
                 
                 if (result.Success)
                 {
-                    return Ok(ApiResponse<AuthResult>.SuccessResponse(result, "Token refreshed successfully"));
+                    return Ok(ApiResponse<object>.SuccessResponse(new { 
+                        token = result.Token, 
+                        refreshToken = result.RefreshToken,
+                        user = result.User,
+                        tokenExpiry = result.TokenExpiry,
+                        refreshTokenExpiry = result.RefreshTokenExpiry
+                    }, "Token refreshed successfully"));
                 }
 
                 return BadRequest(ApiResponse<object>.ErrorResponse(result.Message, result.Errors));
@@ -130,6 +148,37 @@ namespace comicTracker.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error during logout");
+                return StatusCode(500, ApiResponse<object>.ErrorResponse("An internal error occurred"));
+            }
+        }
+
+        /// <summary>
+        /// Revoke a refresh token
+        /// </summary>
+        /// <param name="request">Token revocation request</param>
+        /// <returns>Success message</returns>
+        [HttpPost("revoke")]
+        public async Task<IActionResult> RevokeToken([FromBody] RevokeTokenRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ApiResponse<object>.ErrorResponse("Invalid request data"));
+                }
+
+                var result = await _authService.RevokeRefreshTokenAsync(request.RefreshToken, request.Reason);
+                
+                if (result)
+                {
+                    return Ok(ApiResponse<string>.SuccessResponse("Token revoked successfully", "Token revoked successfully"));
+                }
+
+                return BadRequest(ApiResponse<object>.ErrorResponse("Failed to revoke token or token not found"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during token revocation");
                 return StatusCode(500, ApiResponse<object>.ErrorResponse("An internal error occurred"));
             }
         }

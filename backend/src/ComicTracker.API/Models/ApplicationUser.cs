@@ -8,9 +8,15 @@ namespace comicTracker.Models
         public string LastName { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public string? AvatarUrl { get; set; }
-        public bool IsAdmin { get; set; } = false;
+        
+        // Role-based authentication
+        public UserRole Role { get; set; } = UserRole.User;
+        
+        // Legacy admin flag for backward compatibility (will be deprecated)
+        public bool IsAdmin => Role >= UserRole.Admin;
         
         // Navigation properties
         public virtual ICollection<Comic> Comics { get; set; } = new List<Comic>();
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }

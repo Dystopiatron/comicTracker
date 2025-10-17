@@ -36,12 +36,20 @@ export const AuthProvider = ({ children }) => {
     console.log('Response data:', response.data);
     
     if (response.success && response.data) {
-      // The API returns nested data structure: response.data.data contains token and user
+      // API returns nested structure: response.data.data contains token and user
       const authData = response.data.data || response.data;
-      setUser(authData.user);
-      setToken(authData.token);
-      localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', JSON.stringify(authData.user));
+      if (authData.token && authData.user) {
+        setUser(authData.user);
+        setToken(authData.token);
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', JSON.stringify(authData.user));
+      } else {
+        console.error('Missing token or user in response data:', authData);
+        return {
+          success: false,
+          message: 'Invalid response format from server'
+        };
+      }
     }
     
     return response;
@@ -51,12 +59,14 @@ export const AuthProvider = ({ children }) => {
     const response = await authService.register(userData);
     
     if (response.success && response.data) {
-      // The API returns nested data structure: response.data.data contains token and user
+      // API returns nested structure: response.data.data contains token and user
       const authData = response.data.data || response.data;
-      setUser(authData.user);
-      setToken(authData.token);
-      localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', JSON.stringify(authData.user));
+      if (authData.token && authData.user) {
+        setUser(authData.user);
+        setToken(authData.token);
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', JSON.stringify(authData.user));
+      }
     }
     
     return response;
@@ -69,6 +79,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('refreshToken');
     console.log('Logout completed - user and token cleared');
   };
 

@@ -12,6 +12,7 @@ namespace comicTracker.Data
         }
 
         public DbSet<Comic> Comics { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -71,6 +72,25 @@ namespace comicTracker.Data
                 
                 entity.Property(u => u.AvatarUrl)
                     .HasMaxLength(500);
+                
+                entity.Property(u => u.Role)
+                    .HasConversion<string>();
+            });
+
+            // Configure RefreshToken entity
+            builder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Token).IsRequired().HasMaxLength(500);
+                entity.Property(e => e.RevokedReason).HasMaxLength(200);
+
+                entity.HasOne(e => e.User)
+                      .WithMany(u => u.RefreshTokens)
+                      .HasForeignKey(e => e.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.Token);
+                entity.HasIndex(e => new { e.UserId, e.IsRevoked });
             });
 
             // Seed some initial data for demo purposes
@@ -108,6 +128,7 @@ namespace comicTracker.Data
                 FirstName = "Comic",
                 LastName = "Fan",
                 DateCreated = DateTime.UtcNow,
+                Role = UserRole.Admin,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
             comicFanUser.PasswordHash = hasher.HashPassword(comicFanUser, "MyComics2024");

@@ -62,15 +62,17 @@ const LoginForm = () => {
 
         <div className="alert alert-info">
           <strong>Demo Credentials:</strong>
-          <br />
-          Username: <code>comicfan</code>
-          <br />
-          Password: <code>MyComics2024</code>
-          <br />
+          <div className="mt-2">
+            <div className="mb-1">Username: <code>comicfan</code></div>
+            <div className="mb-1">Password: <code>MyComics2024</code></div>
+          </div>
+        </div>
+
+        <div className="text-center mb-3">
           <button 
             type="button" 
             onClick={handleDemoLogin}
-            className="btn btn-outline btn-sm mt-2"
+            className="btn btn-outline btn-sm"
           >
             Use Demo Credentials
           </button>

@@ -10,6 +10,10 @@ class AuthService {
       if (authData.token && authData.user) {
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', JSON.stringify(authData.user));
+        // Store refresh token if provided
+        if (authData.refreshToken) {
+          localStorage.setItem('refreshToken', authData.refreshToken);
+        }
       }
     }
     
@@ -24,6 +28,7 @@ class AuthService {
     try {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('refreshToken');
     } catch (error) {
       console.error('Logout error:', error);
     }

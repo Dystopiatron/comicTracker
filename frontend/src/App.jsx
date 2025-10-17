@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
+import AdminRoute from './components/Auth/AdminRoute';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -63,9 +64,9 @@ const AppRoutes = () => {
         </ProtectedRoute>
       } />
       <Route path="/admin" element={
-        <ProtectedRoute>
+        <AdminRoute>
           <AdminDashboard />
-        </ProtectedRoute>
+        </AdminRoute>
       } />
       
       {/* Catch all route */}

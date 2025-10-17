@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using comicTracker.DTOs;
 using comicTracker.Models;
+using comicTracker.Data;
+using comicTracker.Services;
 using AutoMapper;
 
 namespace comicTracker.Controllers
@@ -15,15 +17,21 @@ namespace comicTracker.Controllers
     public class AdminController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ComicTrackerDbContext _context;
+        private readonly IRolePermissionService _rolePermissionService;
         private readonly IMapper _mapper;
         private readonly ILogger<AdminController> _logger;
 
         public AdminController(
             UserManager<ApplicationUser> userManager,
+            ComicTrackerDbContext context,
+            IRolePermissionService rolePermissionService,
             IMapper mapper,
             ILogger<AdminController> logger)
         {
             _userManager = userManager;
+            _context = context;
+            _rolePermissionService = rolePermissionService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -41,7 +49,7 @@ namespace comicTracker.Controllers
                     return Forbid("Admin access required");
                 }
 
-                var users = await _userManager.Users
+                var users = await _context.Users
                     .Include(u => u.Comics)
                     .OrderBy(u => u.UserName)
                     .ToListAsync();
@@ -69,7 +77,7 @@ namespace comicTracker.Controllers
                     return Forbid("Admin access required");
                 }
 
-                var user = await _userManager.Users
+                var user = await _context.Users
                     .Include(u => u.Comics)
                     .FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -141,7 +149,7 @@ namespace comicTracker.Controllers
                         result.Errors.Select(e => e.Description).ToList()));
                 }
 
-                var updatedUser = await _userManager.Users
+                var updatedUser = await _context.Users
                     .Include(u => u.Comics)
                     .FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -209,13 +217,11 @@ namespace comicTracker.Controllers
                     return Forbid("Admin access required");
                 }
 
-                var totalUsers = await _userManager.Users.CountAsync();
-                var totalAdmins = await _userManager.Users.CountAsync(u => u.IsAdmin);
-                var totalComics = await _userManager.Users
-                    .SelectMany(u => u.Comics)
-                    .CountAsync();
+                var totalUsers = await _context.Users.CountAsync();
+                var totalAdmins = await _context.Users.CountAsync(u => u.Role >= UserRole.Admin);
+                var totalComics = await _context.Comics.CountAsync();
 
-                var recentUsers = await _userManager.Users
+                var recentUsers = await _context.Users
                     .OrderByDescending(u => u.DateCreated)
                     .Take(5)
                     .Select(u => new { u.UserName, u.DateCreated })
@@ -242,7 +248,14 @@ namespace comicTracker.Controllers
         {
             var userId = GetCurrentUserId();
             var user = await _userManager.FindByIdAsync(userId.ToString());
-            return user?.IsAdmin ?? false;
+            return user != null && _rolePermissionService.HasPermission(user.Role, Permission.AccessAdminPanel);
+        }
+
+        private async Task<bool> HasPermissionAsync(Permission permission)
+        {
+            var userId = GetCurrentUserId();
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            return user != null && _rolePermissionService.HasPermission(user.Role, permission);
         }
 
         private int GetCurrentUserId()

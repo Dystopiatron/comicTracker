@@ -32,6 +32,8 @@ namespace comicTracker.DTOs
         
         [Required]
         public string Password { get; set; } = string.Empty;
+        
+        public bool RememberMe { get; set; } = false;
     }
 
     public class AuthResult
@@ -42,11 +44,19 @@ namespace comicTracker.DTOs
         public string? RefreshToken { get; set; }
         public UserDto? User { get; set; }
         public List<string> Errors { get; set; } = new List<string>();
+        public DateTime TokenExpiry { get; set; }
+        public DateTime RefreshTokenExpiry { get; set; }
     }
 
     public class RefreshTokenRequest
     {
         [Required]
         public string RefreshToken { get; set; } = string.Empty;
+    }
+
+    public class RevokeTokenRequest
+    {
+        public string RefreshToken { get; set; } = string.Empty;
+        public string? Reason { get; set; }
     }
 }
