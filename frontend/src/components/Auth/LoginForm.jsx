@@ -53,7 +53,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="container" style={{ maxWidth: '400px', marginTop: '2rem' }}>
+    <div className="container auth-container-sm">
       <div className="card">
         <div className="card-header text-center">
           <h2>Login to Comic Tracker</h2>
@@ -112,7 +112,7 @@ const LoginForm = () => {
             variant="primary"
             size="lg"
             loading={loading}
-            style={{ width: '100%' }}
+            className="full-width-btn"
           >
             Login
           </Button>

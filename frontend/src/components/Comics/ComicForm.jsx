@@ -128,8 +128,8 @@ const ComicForm = ({ comic, onSave, onCancel, loading = false }) => {
       {submitError && <ErrorMessage message={submitError} onDismiss={() => setSubmitError('')} />}
 
       <form onSubmit={handleSubmit}>
-        <div className="d-flex gap-3">
-          <div className="form-group" style={{ flex: 2 }}>
+        <div className="form-row">
+          <div className="form-group form-group-flex-2">
             <label htmlFor="seriesName" className="form-label">Series Name *</label>
             <input
               type="text"
@@ -144,7 +144,7 @@ const ComicForm = ({ comic, onSave, onCancel, loading = false }) => {
             {errors.seriesName && <div className="form-error">{errors.seriesName}</div>}
           </div>
 
-          <div className="form-group" style={{ flex: 1 }}>
+          <div className="form-group form-group-flex">
             <label htmlFor="issueNumber" className="form-label">Issue Number *</label>
             <input
               type="text"
@@ -160,8 +160,8 @@ const ComicForm = ({ comic, onSave, onCancel, loading = false }) => {
           </div>
         </div>
 
-        <div className="d-flex gap-3">
-          <div className="form-group" style={{ flex: 1 }}>
+        <div className="form-row">
+          <div className="form-group form-group-flex">
             <label htmlFor="publisher" className="form-label">Publisher *</label>
             <select
               id="publisher"
@@ -181,7 +181,7 @@ const ComicForm = ({ comic, onSave, onCancel, loading = false }) => {
             {errors.publisher && <div className="form-error">{errors.publisher}</div>}
           </div>
 
-          <div className="form-group" style={{ flex: 1 }}>
+          <div className="form-group form-group-flex">
             <label htmlFor="condition" className="form-label">Condition</label>
             <select
               id="condition"
@@ -199,7 +199,7 @@ const ComicForm = ({ comic, onSave, onCancel, loading = false }) => {
             </select>
           </div>
 
-          <div className="form-group" style={{ flex: 1 }}>
+          <div className="form-group form-group-flex">
             <label htmlFor="purchasePrice" className="form-label">Purchase Price</label>
             <input
               type="number"

@@ -13,7 +13,7 @@ import EditComicPage from './pages/EditComicPage';
 import ProfilePage from './pages/ProfilePage';
 import StatsPage from './pages/StatsPage';
 import AdminDashboard from './pages/AdminDashboard';
-import './styles/App.css';
+import './styles/index.css';
 
 // Component to handle protected/public route logic
 const AppRoutes = () => {
@@ -78,9 +78,9 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <div className="app-layout">
           <Header />
-          <main style={{ flex: 1 }}>
+          <main className="app-main">
             <AppRoutes />
           </main>
           <Footer />

@@ -71,7 +71,7 @@ const EditComicPage = () => {
   if (loading) {
     return (
       <div className="container">
-        <div className="text-center" style={{ padding: '3rem 0' }}>
+        <div className="text-center loading-section">
           <LoadingSpinner size="lg" />
           <p className="mt-2 text-muted">Loading comic...</p>
         </div>

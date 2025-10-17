@@ -1,0 +1,19 @@
+/* Import all component and page styles */
+
+/* Base and Global Styles */
+@import './App.css';
+
+/* Component Styles */
+@import './components/Header.css';
+@import './components/Footer.css';
+@import './components/Forms.css';
+@import './components/ComicCard.css';
+@import './components/Modal.css';
+@import './components/Loading.css';
+@import './components/Alert.css';
+@import './components/Statistics.css';
+@import './components/Profile.css';
+
+/* Page Styles */
+@import './pages/HomePage.css';
+@import './pages/CollectionPage.css';

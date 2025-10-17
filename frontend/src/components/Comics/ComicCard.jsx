@@ -10,20 +10,14 @@ const ComicCard = ({ comic, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="card">
-      <div className="d-flex gap-3">
+    <div className="comic-card">
+      <div className="comic-card-content">
         {comic.coverImageUrl && (
-          <div style={{ flexShrink: 0 }}>
+          <div className="comic-image-container">
             <img
               src={comic.coverImageUrl}
               alt={`${comic.seriesName} ${comic.issueNumber?.startsWith('#') ? comic.issueNumber : `#${comic.issueNumber}`}`}
-              style={{
-                width: '80px',
-                height: '120px',
-                objectFit: 'cover',
-                borderRadius: '4px',
-                backgroundColor: 'var(--gray-100)'
-              }}
+              className="comic-cover-image"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}
@@ -31,17 +25,17 @@ const ComicCard = ({ comic, onEdit, onDelete }) => {
           </div>
         )}
         
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="d-flex justify-content-between align-items-start">
+        <div className="comic-content">
+          <div className="comic-card-header">
             <div>
-              <h3 className="card-title" style={{ marginBottom: '0.25rem' }}>
+              <h3 className="comic-card-title">
                 {comic.seriesName} {comic.issueNumber?.startsWith('#') ? comic.issueNumber : `#${comic.issueNumber || ''}`}
               </h3>
-              <p className="card-subtitle text-muted">
+              <p className="comic-card-subtitle">
                 {comic.publisher}
               </p>
             </div>
-            <div className="d-flex gap-2">
+            <div className="comic-card-actions">
               <Button
                 variant="outline"
                 size="sm"
@@ -59,28 +53,26 @@ const ComicCard = ({ comic, onEdit, onDelete }) => {
             </div>
           </div>
           
-          <div className="mt-3">
-            <div className="d-flex gap-4 text-sm">
-              <div>
-                <strong>Condition:</strong> {getConditionName(comic.condition)}
-              </div>
-              <div>
-                <strong>Price:</strong> {formatCurrency(comic.purchasePrice)}
-              </div>
-              <div>
-                <strong>Added:</strong> {formatDate(comic.dateAdded)}
-              </div>
+          <div className="comic-card-details">
+            <div className="comic-card-detail">
+              <strong>Condition:</strong> {getConditionName(comic.condition)}
             </div>
-            
-            {comic.notes && (
-              <div className="mt-2">
-                <strong>Notes:</strong> 
-                <p className="text-muted mt-1" style={{ margin: 0 }}>
-                  {comic.notes}
-                </p>
-              </div>
-            )}
+            <div className="comic-card-detail">
+              <strong>Price:</strong> {formatCurrency(comic.purchasePrice)}
+            </div>
+            <div className="comic-card-detail">
+              <strong>Added:</strong> {formatDate(comic.dateAdded)}
+            </div>
           </div>
+          
+          {comic.notes && (
+            <div className="comic-notes-container">
+              <strong>Notes:</strong> 
+              <p className="comic-notes">
+                {comic.notes}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

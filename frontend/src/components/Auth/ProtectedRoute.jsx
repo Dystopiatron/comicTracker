@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
+      <div className="d-flex justify-content-center align-items-center loading-spinner-container">
         <LoadingSpinner size="lg" />
       </div>
     );

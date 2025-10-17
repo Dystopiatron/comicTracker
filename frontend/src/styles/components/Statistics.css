@@ -1,0 +1,164 @@
+/* Statistics Dashboard Component Styles */
+.stats-dashboard {
+  padding: 2rem 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stats-card {
+  background: var(--white);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.stats-number {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  line-height: 1;
+}
+
+.stats-large-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  line-height: 1;
+}
+
+.stats-label {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stats-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.stats-chart-card {
+  background: var(--white);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color);
+}
+
+.stats-chart-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--gray-900);
+}
+
+.stat-item {
+  background-color: var(--gray-50);
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-item:last-child {
+  margin-bottom: 0;
+}
+
+.stat-item-label {
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.stat-item-value {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.stat-item-meta {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-top: 0.25rem;
+}
+
+/* Publisher and Condition Breakdown Styles */
+.publisher-stats,
+.condition-stats {
+  margin-top: 1rem;
+}
+
+.publisher-stats .stat-item:nth-child(even),
+.condition-stats .stat-item:nth-child(even) {
+  background-color: transparent;
+}
+
+/* Fixed column alignment for breakdown sections */
+.publisher-stats,
+.condition-stats {
+  display: table;
+  width: 100%;
+  border-spacing: 0;
+}
+
+.stats-breakdown-row {
+  display: table-row;
+}
+
+.stats-breakdown-label {
+  display: table-cell;
+  text-align: left;
+  padding-right: 2rem;
+  vertical-align: middle;
+  width: 70%;
+}
+
+.stats-breakdown-value {
+  display: table-cell;
+  text-align: right;
+  vertical-align: middle;
+  width: 30%;
+}
+
+/* Empty States */
+.stats-empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--gray-500);
+}
+
+.stats-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--gray-300);
+}
+
+.stats-empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--gray-700);
+}
+
+.stats-empty-description {
+  color: var(--gray-500);
+  margin: 0;
+}

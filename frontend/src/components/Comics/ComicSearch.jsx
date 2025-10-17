@@ -46,14 +46,14 @@ const ComicSearch = ({ filters, onFilterChange, onAddComic }) => {
   return (
     <div className="card">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3 style={{ margin: 0 }}>Search & Filter Comics</h3>
+        <h3 className="section-header">Search & Filter Comics</h3>
         <Button variant="primary" onClick={onAddComic}>
           Add New Comic
         </Button>
       </div>
 
-      <div className="d-flex gap-3 flex-wrap">
-        <div className="form-group" style={{ flex: '2', minWidth: '200px' }}>
+      <div className="search-form-row">
+        <div className="form-group form-group-wide">
           <label htmlFor="search" className="form-label">Search Comics</label>
           <input
             type="text"
@@ -65,7 +65,7 @@ const ComicSearch = ({ filters, onFilterChange, onAddComic }) => {
           />
         </div>
 
-        <div className="form-group" style={{ flex: '1', minWidth: '150px' }}>
+        <div className="form-group form-group-narrow">
           <label htmlFor="publisher" className="form-label">Publisher</label>
           <select
             id="publisher"
@@ -82,7 +82,7 @@ const ComicSearch = ({ filters, onFilterChange, onAddComic }) => {
           </select>
         </div>
 
-        <div className="form-group" style={{ flex: '1', minWidth: '150px' }}>
+        <div className="form-group form-group-narrow">
           <label htmlFor="condition" className="form-label">Condition</label>
           <select
             id="condition"
@@ -106,7 +106,7 @@ const ComicSearch = ({ filters, onFilterChange, onAddComic }) => {
             <Button
               variant="outline"
               onClick={handleClearFilters}
-              style={{ marginBottom: '1rem' }}
+              className="mb-4"
             >
               Clear Filters
             </Button>

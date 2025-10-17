@@ -1,9 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import adminService from '../../services/adminService';
 
 const UserDeleteModal = ({ user, show, onHide, onUserDeleted }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onHide();
+      }
+    };
+
+    if (show) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [show, onHide]);
 
   const handleDelete = async () => {
     try {
@@ -28,8 +46,8 @@ const UserDeleteModal = ({ user, show, onHide, onUserDeleted }) => {
   if (!show) return null;
 
   return (
-    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-      <div className="modal-dialog">
+    <div className="modal-backdrop" tabIndex="-1" onClick={onHide}>
+      <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title text-danger">

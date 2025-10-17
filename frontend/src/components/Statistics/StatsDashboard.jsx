@@ -36,7 +36,7 @@ const StatsDashboard = () => {
 
   if (loading) {
     return (
-      <div className="text-center" style={{ padding: '3rem 0' }}>
+      <div className="text-center loading-section">
         <LoadingSpinner size="lg" />
         <p className="mt-2 text-muted">Loading statistics...</p>
       </div>
@@ -59,49 +59,46 @@ const StatsDashboard = () => {
   return (
     <div>
       {/* Overview Cards */}
-      <div className="row mb-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+            <div className="stats-grid mb-4">
         <div className="card text-center">
-          <h3 className="text-primary" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0' }}>
+          <h3 className="text-primary stats-large-number">
             {stats.totalComics}
           </h3>
           <p className="text-muted mb-0">Total Comics</p>
         </div>
         <div className="card text-center">
-          <h3 className="text-success" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0' }}>
+          <h3 className="text-success stats-large-number">
             {stats.seriesTracked}
           </h3>
-          <p className="text-muted mb-0">Unique Series</p>
+          <p className="text-muted mb-0">Series Tracked</p>
         </div>
         <div className="card text-center">
-          <h3 className="text-warning" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0' }}>
+          <h3 className="text-warning stats-large-number">
             {stats.publishersCount}
           </h3>
           <p className="text-muted mb-0">Publishers</p>
         </div>
         <div className="card text-center">
-          <h3 className="text-danger" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0' }}>
+          <h3 className="text-danger stats-large-number">
             {formatCurrency(stats.totalValue)}
           </h3>
-          <p className="text-muted mb-0">Total Collection Value</p>
+          <p className="text-muted mb-0">Total Value</p>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1rem' }}>
+      <div className="stats-charts-grid">
         {/* Publisher Breakdown */}
         <div className="card">
           <h3>Publisher Breakdown</h3>
           {stats.publisherBreakdown && Object.keys(stats.publisherBreakdown).length > 0 ? (
             <div className="publisher-stats">
               {Object.entries(stats.publisherBreakdown).map(([publisher, count], index) => (
-                <div key={publisher} className="d-flex justify-content-between align-items-center mb-2 p-2" style={{
-                  backgroundColor: index % 2 === 0 ? 'var(--gray-50)' : 'transparent',
-                  borderRadius: '4px'
-                }}>
-                  <div>
+                <div key={publisher} className={`stats-breakdown-row mb-2 p-2 ${index % 2 === 0 ? 'stat-item' : ''}`}>
+                  <div className="stats-breakdown-label">
                     <strong>{publisher}</strong>
-                    <div className="text-muted text-sm">
-                      {count} comic{count !== 1 ? 's' : ''}
-                    </div>
+                  </div>
+                  <div className="stats-breakdown-value">
+                    <strong>{count} comic{count !== 1 ? 's' : ''}</strong>
                   </div>
                 </div>
               ))}
@@ -132,15 +129,12 @@ const StatsDashboard = () => {
                   return (conditionOrder[conditionA] || 9) - (conditionOrder[conditionB] || 9);
                 })
                 .map(([condition, count], index) => (
-                <div key={condition} className="d-flex justify-content-between align-items-center mb-2 p-2" style={{
-                  backgroundColor: index % 2 === 0 ? 'var(--gray-50)' : 'transparent',
-                  borderRadius: '4px'
-                }}>
-                  <div>
+                <div key={condition} className={`stats-breakdown-row mb-2 p-2 ${index % 2 === 0 ? 'stat-item' : ''}`}>
+                  <div className="stats-breakdown-label">
                     <strong>{condition}</strong>
-                    <div className="text-muted text-sm">
-                      {count} comic{count !== 1 ? 's' : ''}
-                    </div>
+                  </div>
+                  <div className="stats-breakdown-value">
+                    <strong>{count} comic{count !== 1 ? 's' : ''}</strong>
                   </div>
                 </div>
               ))}

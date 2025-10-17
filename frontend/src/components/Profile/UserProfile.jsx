@@ -46,31 +46,31 @@ const UserProfile = () => {
       </div>
 
       <div className="profile-info">
-        <div className="row mb-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div className="profile-grid mb-3">
           <div>
             <label className="form-label text-muted">First Name</label>
-            <p style={{ margin: 0, fontWeight: '500' }}>{user.data?.firstName || user.firstName || 'Not set'}</p>
+            <p className="profile-field">{user.data?.firstName || user.firstName || 'Not set'}</p>
           </div>
           <div>
             <label className="form-label text-muted">Last Name</label>
-            <p style={{ margin: 0, fontWeight: '500' }}>{user.data?.lastName || user.lastName || 'Not set'}</p>
+            <p className="profile-field">{user.data?.lastName || user.lastName || 'Not set'}</p>
           </div>
         </div>
 
-        <div className="row mb-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div className="profile-grid mb-3">
           <div>
             <label className="form-label text-muted">Username</label>
-            <p style={{ margin: 0, fontWeight: '500' }}>{user.data?.username || user.username || 'Not set'}</p>
+            <p className="profile-field">{user.data?.username || user.username || 'Not set'}</p>
           </div>
           <div>
             <label className="form-label text-muted">Email</label>
-            <p style={{ margin: 0, fontWeight: '500' }}>{user.data?.email || user.email || 'Not set'}</p>
+            <p className="profile-field">{user.data?.email || user.email || 'Not set'}</p>
           </div>
         </div>
 
         <div className="mb-3">
           <label className="form-label text-muted">User ID</label>
-          <p className="text-muted" style={{ margin: 0, fontSize: '0.875rem', fontFamily: 'monospace' }}>
+          <p className="text-muted profile-id">
             {user.data?.id || user.id || 'Not set'}
           </p>
         </div>

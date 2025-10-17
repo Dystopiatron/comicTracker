@@ -47,7 +47,7 @@ const HomePage = () => {
   if (loading) {
     return (
       <div className="container">
-        <div className="text-center" style={{ padding: '3rem 0' }}>
+        <div className="text-center loading-section">
           <LoadingSpinner size="lg" />
           <p className="mt-2 text-muted">Loading dashboard...</p>
         </div>
@@ -70,27 +70,27 @@ const HomePage = () => {
 
         {/* Quick Stats */}
         {stats && (
-          <div className="row mb-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          <div className="stats-grid mb-4">
             <div className="card text-center">
-              <h3 className="text-primary" style={{ fontSize: '2rem', margin: '0 0 0.5rem 0' }}>
+              <h3 className="text-primary stat-number">
                 {stats.totalComics}
               </h3>
               <p className="text-muted mb-0">Total Comics</p>
             </div>
             <div className="card text-center">
-              <h3 className="text-success" style={{ fontSize: '2rem', margin: '0 0 0.5rem 0' }}>
+              <h3 className="text-success stat-number">
                 {stats.seriesTracked}
               </h3>
               <p className="text-muted mb-0">Series</p>
             </div>
             <div className="card text-center">
-              <h3 className="text-warning" style={{ fontSize: '2rem', margin: '0 0 0.5rem 0' }}>
+              <h3 className="text-warning stat-number">
                 {stats.publishersCount}
               </h3>
               <p className="text-muted mb-0">Publishers</p>
             </div>
             <div className="card text-center">
-              <h3 className="text-danger" style={{ fontSize: '2rem', margin: '0 0 0.5rem 0' }}>
+              <h3 className="text-danger stat-number">
                 {formatCurrency(stats.totalValue)}
               </h3>
               <p className="text-muted mb-0">Total Value</p>
@@ -118,7 +118,7 @@ const HomePage = () => {
         {recentComics.length > 0 && (
           <div className="card">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <h3 style={{ margin: 0 }}>Recently Added Comics</h3>
+              <h3 className="section-header">Recently Added Comics</h3>
               <Link to="/collection" className="btn btn-outline btn-sm">
                 View All
               </Link>
@@ -126,30 +126,22 @@ const HomePage = () => {
             
             <div className="recent-comics">
               {recentComics.map(comic => (
-                <div key={comic.id} className="d-flex align-items-center gap-3 p-3" style={{ 
-                  borderBottom: '1px solid var(--border-color)'
-                }}>
+                <div key={comic.id} className="d-flex align-items-center gap-3 p-3 recent-comic-item">
                   {comic.coverImageUrl && (
                     <img
                       src={comic.coverImageUrl}
                       alt={`${comic.seriesName} ${comic.issueNumber?.startsWith('#') ? comic.issueNumber : `#${comic.issueNumber}`}`}
-                      style={{
-                        width: '40px',
-                        height: '60px',
-                        objectFit: 'cover',
-                        borderRadius: '4px',
-                        backgroundColor: 'var(--gray-100)'
-                      }}
+                      className="comic-cover"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                       }}
                     />
                   )}
-                  <div style={{ flex: 1 }}>
-                    <h4 style={{ margin: '0 0 0.25rem 0', fontSize: '1rem' }}>
+                  <div className="comic-details">
+                    <h4 className="comic-title">
                       {comic.seriesName} {comic.issueNumber?.startsWith('#') ? comic.issueNumber : `#${comic.issueNumber || ''}`}
                     </h4>
-                    <p className="text-muted" style={{ margin: 0, fontSize: '0.875rem' }}>
+                    <p className="text-muted comic-meta">
                       {comic.publisher} • {formatCurrency(comic.purchasePrice)}
                     </p>
                   </div>
@@ -161,7 +153,7 @@ const HomePage = () => {
 
         {/* Empty State */}
         {stats?.totalComics === 0 && (
-          <div className="card text-center" style={{ padding: '3rem' }}>
+          <div className="card text-center empty-state">
             <h3>Start Your Collection</h3>
             <p className="text-muted mb-3">
               You haven't added any comics yet. Get started by adding your first comic to your collection!

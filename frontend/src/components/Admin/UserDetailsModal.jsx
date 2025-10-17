@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const UserDetailsModal = ({ user, show, onHide }) => {
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onHide();
+      }
+    };
+
+    if (show) {
+      document.addEventListener('keydown', handleEscape);
+      // Prevent body scrolling when modal is open
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [show, onHide]);
+
   if (!show) return null;
 
   return (
-    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-      <div className="modal-dialog modal-lg">
+    <div className="modal-backdrop" tabIndex="-1" onClick={onHide}>
+      <div className="modal-dialog modal-lg" onClick={(e) => e.stopPropagation()}>
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">
@@ -27,40 +46,52 @@ const UserDetailsModal = ({ user, show, onHide }) => {
                     </h6>
                   </div>
                   <div className="card-body">
-                    <dl className="row mb-0">
-                      <dt className="col-sm-4">Username:</dt>
-                      <dd className="col-sm-8">{user?.username || 'N/A'}</dd>
+                    <div className="user-details-list">
+                      <div className="user-detail-row">
+                        <span className="user-detail-label">Username:</span>
+                        <span className="user-detail-value">{user?.username || 'N/A'}</span>
+                      </div>
                       
-                      <dt className="col-sm-4">Email:</dt>
-                      <dd className="col-sm-8">{user?.email || 'N/A'}</dd>
+                      <div className="user-detail-row">
+                        <span className="user-detail-label">Email:</span>
+                        <span className="user-detail-value">{user?.email || 'N/A'}</span>
+                      </div>
                       
-                      <dt className="col-sm-4">First Name:</dt>
-                      <dd className="col-sm-8">{user?.firstName || 'N/A'}</dd>
+                      <div className="user-detail-row">
+                        <span className="user-detail-label">First Name:</span>
+                        <span className="user-detail-value">{user?.firstName || 'N/A'}</span>
+                      </div>
                       
-                      <dt className="col-sm-4">Last Name:</dt>
-                      <dd className="col-sm-8">{user?.lastName || 'N/A'}</dd>
+                      <div className="user-detail-row">
+                        <span className="user-detail-label">Last Name:</span>
+                        <span className="user-detail-value">{user?.lastName || 'N/A'}</span>
+                      </div>
                       
-                      <dt className="col-sm-4">Status:</dt>
-                      <dd className="col-sm-8">
-                        <span className="badge bg-success">Active</span>
-                        {user?.isAdmin && (
-                          <span className="badge bg-warning text-dark ms-2">Admin</span>
-                        )}
-                      </dd>
+                      <div className="user-detail-row">
+                        <span className="user-detail-label">Status:</span>
+                        <span className="user-detail-value">
+                          <span className="badge bg-success">Active</span>
+                          {user?.isAdmin && (
+                            <span className="badge bg-warning text-dark ms-2">Admin</span>
+                          )}
+                        </span>
+                      </div>
                       
-                      <dt className="col-sm-4">Joined:</dt>
-                      <dd className="col-sm-8">
-                        {user?.dateCreated ? 
-                          new Date(user.dateCreated).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          }) : 'N/A'
-                        }
-                      </dd>
-                    </dl>
+                      <div className="user-detail-row">
+                        <span className="user-detail-label">Joined:</span>
+                        <span className="user-detail-value">
+                          {user?.dateCreated ? 
+                            new Date(user.dateCreated).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            }) : 'N/A'
+                          }
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -105,8 +136,8 @@ const UserDetailsModal = ({ user, show, onHide }) => {
               </div>
               <div className="card-body">
                 {user?.comics && user.comics.length > 0 ? (
-                  <div className="table-responsive" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                    <table className="table table-sm table-hover">
+                  <div className="table-responsive modal-scrollable">
+                    <table className="table table-striped">
                       <thead className="table-light sticky-top">
                         <tr>
                           <th>Title</th>

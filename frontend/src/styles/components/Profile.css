@@ -1,0 +1,137 @@
+/* Profile Component Styles */
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-card {
+  background: var(--white);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.profile-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.profile-info {
+  margin-top: 1.5rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-field-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-field-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.profile-field {
+  margin: 0;
+  font-weight: 500;
+  color: var(--gray-900);
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.profile-field:empty::before {
+  content: 'Not set';
+  color: var(--gray-400);
+  font-style: italic;
+}
+
+.profile-id {
+  margin: 0;
+  font-size: 0.875rem;
+  font-family: 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', monospace;
+  background-color: var(--gray-100);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-color);
+}
+
+.profile-single-field {
+  margin-bottom: 1.5rem;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Edit Profile Specific Styles */
+.edit-profile-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.edit-profile-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.edit-profile-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--gray-900);
+}
+
+.edit-profile-subtitle {
+  color: var(--gray-600);
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .profile-card {
+    padding: 1.5rem;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .profile-actions {
+    justify-content: center;
+  }
+}

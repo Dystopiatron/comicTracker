@@ -1,0 +1,199 @@
+/* Home Page Styles */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: var(--gray-900);
+}
+
+.home-subtitle {
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-welcome {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #3b82f6 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.home-welcome-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.home-stats-section {
+  margin-bottom: 3rem;
+}
+
+.home-quick-actions {
+  background: var(--white);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  margin-bottom: 3rem;
+}
+
+.home-actions-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: var(--gray-900);
+}
+
+.home-actions-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.home-recent-section {
+  background: var(--white);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+}
+
+.home-recent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.home-recent-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--gray-900);
+}
+
+.recent-comics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recent-comic-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.recent-comic-item:hover {
+  background-color: var(--gray-50);
+}
+
+.recent-comic-item:last-child {
+  border-bottom: none;
+}
+
+.comic-cover {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: var(--gray-100);
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.comic-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.comic-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.comic-meta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: var(--white);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--gray-300);
+}
+
+.empty-state-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--gray-900);
+}
+
+.empty-state-description {
+  color: var(--gray-600);
+  margin: 0 0 2rem 0;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1rem;
+  }
+  
+  .home-title {
+    font-size: 2rem;
+  }
+  
+  .home-welcome {
+    padding: 1.5rem;
+  }
+  
+  .home-quick-actions,
+  .home-recent-section {
+    padding: 1.5rem;
+  }
+  
+  .home-actions-grid {
+    flex-direction: column;
+  }
+  
+  .recent-comic-item {
+    padding: 0.75rem;
+  }
+}

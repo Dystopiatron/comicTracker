@@ -1,0 +1,38 @@
+/* Header Component Styles */
+.site-header {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+}
+
+.site-logo {
+  text-decoration: none;
+  color: inherit;
+}
+
+.site-logo:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.header-nav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.header-welcome {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}

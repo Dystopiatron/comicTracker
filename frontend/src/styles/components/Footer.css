@@ -1,0 +1,20 @@
+/* Footer Component Styles */
+.site-footer {
+  background-color: var(--gray-100);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: auto;
+}
+
+.footer-text {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

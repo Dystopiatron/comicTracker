@@ -1,11 +1,10 @@
 import React from 'react';
 
 const LoadingSpinner = ({ size = 'md', className = '' }) => {
+  const sizeClass = size === 'sm' ? 'loading-spinner-sm' : size === 'lg' ? 'loading-spinner-lg' : '';
+  
   return (
-    <div className={`loading-spinner ${className}`} style={{
-      width: size === 'sm' ? '1rem' : size === 'lg' ? '2rem' : '1.5rem',
-      height: size === 'sm' ? '1rem' : size === 'lg' ? '2rem' : '1.5rem'
-    }}>
+    <div className={`loading-spinner ${sizeClass} ${className}`}>
     </div>
   );
 };

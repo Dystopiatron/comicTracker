@@ -10,15 +10,7 @@ const ErrorMessage = ({ message, type = 'error', onDismiss }) => {
         {onDismiss && (
           <button
             onClick={onDismiss}
-            className="btn btn-sm"
-            style={{ 
-              background: 'none', 
-              border: 'none', 
-              color: 'inherit',
-              fontSize: '1.2rem',
-              lineHeight: 1,
-              padding: '0 0.25rem'
-            }}
+            className="alert-close-btn"
           >
             ×
           </button>

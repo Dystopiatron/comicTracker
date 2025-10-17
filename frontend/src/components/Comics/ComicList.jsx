@@ -19,7 +19,7 @@ const ComicList = ({
   const safeComics = Array.isArray(comics) ? comics : [];
   if (loading) {
     return (
-      <div className="text-center" style={{ padding: '3rem 0' }}>
+      <div className="text-center loading-section">
         <LoadingSpinner size="lg" />
         <p className="mt-2 text-muted">Loading comics...</p>
       </div>
@@ -32,8 +32,8 @@ const ComicList = ({
 
   if (safeComics.length === 0) {
     return (
-      <div className="card text-center" style={{ padding: '3rem' }}>
-        <h3>No comics found</h3>
+      <div className="card text-center empty-state">
+        <h3>No Comics Found</h3>
         <p className="text-muted">Start building your collection by adding your first comic!</p>
       </div>
     );

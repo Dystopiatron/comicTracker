@@ -17,24 +17,20 @@ const Header = () => {
   };
 
   return (
-    <header style={{
-      backgroundColor: 'var(--white)',
-      borderBottom: '1px solid var(--border-color)',
-      padding: '1rem 0'
-    }}>
+    <header className="site-header">
       <div className="container">
         <div className="d-flex justify-content-between align-items-center">
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h1 style={{ margin: 0, fontSize: '1.5rem', color: 'var(--primary-color)' }}>
+          <Link to="/" className="site-logo">
+            <h1 className="logo-title">
               📚 Comic Tracker
             </h1>
           </Link>
           
-          <div className="d-flex align-items-center gap-3">
+          <div className="header-actions">
             {isAuthenticated ? (
               <>
-                <span className="text-muted">Welcome, {user?.data?.firstName || user?.firstName || user?.firstname || user?.data?.username || user?.username || 'User'}!</span>
-                <nav className="d-flex gap-3">
+                <span className="header-welcome">Welcome, {user?.data?.firstName || user?.firstName || user?.firstname || user?.data?.username || user?.username || 'User'}!</span>
+                <nav className="header-nav">
                   <Link to="/" className="btn btn-outline btn-sm">Home</Link>
                   <Link to="/collection" className="btn btn-outline btn-sm">Collection</Link>
                   <Link to="/stats" className="btn btn-outline btn-sm">Statistics</Link>
@@ -51,7 +47,7 @@ const Header = () => {
                 </button>
               </>
             ) : (
-              <div className="d-flex gap-2">
+              <div className="header-nav">
                 <Link to="/login" className="btn btn-primary btn-sm">Login</Link>
                 <Link to="/register" className="btn btn-outline btn-sm">Register</Link>
               </div>

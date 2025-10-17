@@ -102,7 +102,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="container" style={{ maxWidth: '500px', marginTop: '2rem' }}>
+    <div className="container auth-container">
       <div className="card">
         <div className="card-header text-center">
           <h2>Create Account</h2>
@@ -112,8 +112,8 @@ const RegisterForm = () => {
         {errors.general && <ErrorMessage message={errors.general} onDismiss={() => setErrors(prev => ({ ...prev, general: '' }))} />}
 
         <form onSubmit={handleSubmit}>
-          <div className="d-flex gap-3">
-            <div className="form-group" style={{ flex: 1 }}>
+          <div className="form-row">
+            <div className="form-group form-group-flex">
               <label htmlFor="firstName" className="form-label">First Name</label>
               <input
                 type="text"
@@ -127,7 +127,7 @@ const RegisterForm = () => {
               {errors.firstName && <div className="form-error">{errors.firstName}</div>}
             </div>
 
-            <div className="form-group" style={{ flex: 1 }}>
+            <div className="form-group form-group-flex">
               <label htmlFor="lastName" className="form-label">Last Name</label>
               <input
                 type="text"
@@ -203,7 +203,7 @@ const RegisterForm = () => {
             variant="primary"
             size="lg"
             loading={loading}
-            style={{ width: '100%' }}
+            className="full-width-btn"
           >
             Create Account
           </Button>

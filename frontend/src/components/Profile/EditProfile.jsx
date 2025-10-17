@@ -91,8 +91,8 @@ const EditProfile = ({ user, onSave, onCancel }) => {
       {errors.general && <ErrorMessage message={errors.general} onDismiss={() => setErrors(prev => ({ ...prev, general: '' }))} />}
 
       <form onSubmit={handleSubmit}>
-        <div className="d-flex gap-3">
-          <div className="form-group" style={{ flex: 1 }}>
+        <div className="form-row">
+          <div className="form-group form-group-flex">
             <label htmlFor="firstName" className="form-label">First Name</label>
             <input
               type="text"
@@ -106,7 +106,7 @@ const EditProfile = ({ user, onSave, onCancel }) => {
             {errors.firstName && <div className="form-error">{errors.firstName}</div>}
           </div>
 
-          <div className="form-group" style={{ flex: 1 }}>
+          <div className="form-group form-group-flex">
             <label htmlFor="lastName" className="form-label">Last Name</label>
             <input
               type="text"

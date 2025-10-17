@@ -1,0 +1,271 @@
+/* Modal Component Styles */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 1.75rem;
+  max-width: 500px;
+  pointer-events: none;
+}
+
+.modal-dialog.modal-lg {
+  max-width: 800px;
+}
+
+.modal-dialog-lg {
+  max-width: 800px;
+}
+
+.modal-dialog-xl {
+  max-width: 1140px;
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  pointer-events: auto;
+  background-clip: padding-box;
+  outline: 0;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--gray-500);
+  cursor: pointer;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.modal-close:hover {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.modal-scrollable {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+}
+
+/* Ensure modals work properly */
+.modal-backdrop.show {
+  opacity: 1;
+}
+
+.modal-backdrop.fade {
+  transition: opacity 0.15s linear;
+}
+
+.modal-dialog-scrollable {
+  max-height: calc(100% - 1rem);
+}
+
+.modal-dialog-scrollable .modal-content {
+  max-height: calc(100vh - 1rem);
+  overflow: hidden;
+}
+
+.modal-dialog-scrollable .modal-body {
+  overflow-y: auto;
+}
+
+/* Bootstrap close button compatibility */
+.btn-close {
+  box-sizing: content-box;
+  width: 1em;
+  height: 1em;
+  padding: 0.25em 0.25em;
+  color: #000;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='m.235.793l15.5 15.5a1 1 0 001.414-1.414L.707.379A1 1 0 00.235.793z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  border: 0;
+  border-radius: 0.375rem;
+  opacity: 0.5;
+}
+
+.btn-close:hover {
+  color: #000;
+  text-decoration: none;
+  opacity: 0.75;
+}
+
+.btn-close:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  opacity: 1;
+}
+
+/* Admin Modal Specific Styles */
+.user-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.user-detail-item {
+  padding: 1rem;
+  background-color: var(--gray-50);
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-color);
+}
+
+.user-detail-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 0.25rem;
+}
+
+.user-detail-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.user-comics-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* User Details List Layout */
+.user-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.user-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.user-detail-row:last-child {
+  border-bottom: none;
+}
+
+.user-detail-label {
+  font-weight: 600;
+  color: var(--gray-700);
+  flex-shrink: 0;
+  min-width: 80px;
+  margin-right: 1rem;
+}
+
+.user-detail-value {
+  color: var(--gray-900);
+  text-align: right;
+  flex-grow: 1;
+  word-break: break-word;
+}
+
+/* User Edit Form Layout */
+.user-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.user-edit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.user-edit-label {
+  font-weight: 600;
+  color: var(--gray-700);
+  flex-shrink: 0;
+  min-width: 140px;
+  padding-top: 0.375rem;
+  margin-bottom: 0;
+}
+
+.user-edit-input {
+  flex-grow: 1;
+  max-width: 300px;
+}
+
+.user-edit-checkbox-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.user-edit-checkbox-container .form-check {
+  margin-bottom: 0.5rem;
+}
+
+.user-edit-checkbox-container .text-muted {
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
