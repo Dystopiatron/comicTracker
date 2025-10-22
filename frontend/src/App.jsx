@@ -1,6 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { apiClient } from './services/api';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
@@ -13,12 +14,23 @@ import AddComicPage from './pages/AddComicPage';
 import EditComicPage from './pages/EditComicPage';
 import ProfilePage from './pages/ProfilePage';
 import StatsPage from './pages/StatsPage';
+import WishlistPage from './pages/WishlistPage';
 import AdminDashboard from './pages/AdminDashboard';
 import './styles/index.css';
 
 // Component to handle protected/public route logic
 const AppRoutes = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  // Set up 401 handler when component mounts
+  useEffect(() => {
+    apiClient.setUnauthorizedCallback(() => {
+      console.log('Session expired - logging out user');
+      logout();
+      navigate('/login', { replace: true });
+    });
+  }, [logout, navigate]);
 
   return (
     <Routes>
@@ -41,6 +53,11 @@ const AppRoutes = () => {
       <Route path="/collection" element={
         <ProtectedRoute>
           <CollectionPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/wishlist" element={
+        <ProtectedRoute>
+          <WishlistPage />
         </ProtectedRoute>
       } />
       <Route path="/add-comic" element={

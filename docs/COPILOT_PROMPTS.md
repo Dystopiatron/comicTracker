@@ -3,7 +3,7 @@
 ## 🎯 Quick Start Prompt
 
 ```
-Create a React frontend for a Comic Collection Tracker that connects to an ASP.NET Core API running on http://localhost:5000. 
+Create a React frontend for a Comic Collection Tracker that connects to an ASP.NET Core API running on http://localhost:8000. 
 
 Requirements:
 - Authentication (login/register) with JWT tokens
@@ -63,7 +63,7 @@ Create a basic App.js with React Router setup for these routes: /, /login, /regi
 
 **For Authentication:**
 ```
-Create an AuthContext that manages JWT tokens in localStorage. Include login, logout, and user state. Create a useAuth hook. Build login and register forms that call the API at http://localhost:5000/api/auth/login and /api/auth/register. Display demo credentials (demouser/Demo123!) on login form for testing.
+Create an AuthContext that manages JWT tokens in localStorage. Include login, logout, and user state. Create a useAuth hook. Build login and register forms that call the API at http://localhost:8000/api/auth/login and /api/auth/register. Display demo credentials (comicfan/Mycomics2024) on login form for testing.
 ```
 
 **For Comic Management:**

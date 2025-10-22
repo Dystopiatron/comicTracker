@@ -33,6 +33,7 @@ const Header = () => {
                 <nav className="header-nav">
                   <Link to="/" className="btn btn-outline btn-sm">Home</Link>
                   <Link to="/collection" className="btn btn-outline btn-sm">Collection</Link>
+                  <Link to="/wishlist" className="btn btn-outline btn-sm">Wishlist</Link>
                   <Link to="/stats" className="btn btn-outline btn-sm">Statistics</Link>
                   <Link to="/profile" className="btn btn-outline btn-sm">Profile</Link>
                   {user?.isAdmin && (

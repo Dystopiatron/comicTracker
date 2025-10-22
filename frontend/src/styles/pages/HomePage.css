@@ -141,35 +141,6 @@
   color: var(--gray-600);
 }
 
-.empty-state {
-  text-align: center;
-  padding: 3rem;
-  background: var(--white);
-  border-radius: 0.75rem;
-  border: 1px solid var(--border-color);
-}
-
-.empty-state-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: var(--gray-300);
-}
-
-.empty-state-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0 0 1rem 0;
-  color: var(--gray-900);
-}
-
-.empty-state-description {
-  color: var(--gray-600);
-  margin: 0 0 2rem 0;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .home-container {

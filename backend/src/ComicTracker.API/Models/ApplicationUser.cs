@@ -18,5 +18,6 @@ namespace comicTracker.Models
         // Navigation properties
         public virtual ICollection<Comic> Comics { get; set; } = new List<Comic>();
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+        public virtual ICollection<WishlistItem> WishlistItems { get; set; } = new List<WishlistItem>();
     }
 }

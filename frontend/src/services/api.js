@@ -1,6 +1,20 @@
 const API_BASE_URL = 'http://localhost:8000/api';
 
 class ApiClient {
+  constructor() {
+    this.onUnauthorized = null; // Callback for 401 errors
+  }
+
+  setUnauthorizedCallback(callback) {
+    this.onUnauthorized = callback;
+  }
+
+  handleUnauthorized() {
+    if (this.onUnauthorized) {
+      this.onUnauthorized();
+    }
+  }
+
   getAuthHeaders() {
     const token = localStorage.getItem('token');
     const headers = {
@@ -21,12 +35,32 @@ class ApiClient {
         headers: this.getAuthHeaders(),
       });
 
-      const data = await response.json();
+      // Handle 401 Unauthorized
+      if (response.status === 401) {
+        this.handleUnauthorized();
+        return {
+          success: false,
+          message: 'Your session has expired. Please login again.',
+          unauthorized: true,
+        };
+      }
+
+      // Handle empty response body (e.g., 204 No Content)
+      const contentType = response.headers.get('content-type');
+      let data = null;
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (e) {
+          // Response claimed to be JSON but wasn't - handle gracefully
+          data = null;
+        }
+      }
       
       if (!response.ok) {
         return {
           success: false,
-          message: data.message || 'Request failed',
+          message: data?.message || 'Request failed',
         };
       }
 
@@ -57,18 +91,38 @@ class ApiClient {
         body: JSON.stringify(body),
       });
 
-      const data = await response.json();
+      // Handle 401 Unauthorized
+      if (response.status === 401) {
+        this.handleUnauthorized();
+        return {
+          success: false,
+          message: 'Your session has expired. Please login again.',
+          unauthorized: true,
+        };
+      }
+
+      // Handle empty response body
+      const contentType = response.headers.get('content-type');
+      let data = null;
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (e) {
+          // Response claimed to be JSON but wasn't - handle gracefully
+          data = null;
+        }
+      }
       
       if (!response.ok) {
         return {
           success: false,
-          message: data.message || 'Request failed',
+          message: data?.message || 'Request failed',
         };
       }
 
       return {
         success: true,
-        message: data.message || 'Success',
+        message: data?.message || 'Success',
         data,
       };
     } catch (error) {
@@ -87,18 +141,38 @@ class ApiClient {
         body: JSON.stringify(body),
       });
 
-      const data = await response.json();
+      // Handle 401 Unauthorized
+      if (response.status === 401) {
+        this.handleUnauthorized();
+        return {
+          success: false,
+          message: 'Your session has expired. Please login again.',
+          unauthorized: true,
+        };
+      }
+
+      // Handle empty response body
+      const contentType = response.headers.get('content-type');
+      let data = null;
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (e) {
+          // Response claimed to be JSON but wasn't - handle gracefully
+          data = null;
+        }
+      }
       
       if (!response.ok) {
         return {
           success: false,
-          message: data.message || 'Request failed',
+          message: data?.message || 'Request failed',
         };
       }
 
       return {
         success: true,
-        message: data.message || 'Success',
+        message: data?.message || 'Success',
         data,
       };
     } catch (error) {
@@ -116,20 +190,33 @@ class ApiClient {
         headers: this.getAuthHeaders(),
       });
 
-      if (!response.ok) {
-        const data = await response.json();
+      // Handle 401 Unauthorized
+      if (response.status === 401) {
+        this.handleUnauthorized();
         return {
           success: false,
-          message: data.message || 'Request failed',
+          message: 'Your session has expired. Please login again.',
+          unauthorized: true,
         };
       }
 
-      // Handle cases where DELETE returns no content
-      let data;
-      try {
-        data = await response.json();
-      } catch {
-        data = null;
+      // Handle empty response body
+      const contentType = response.headers.get('content-type');
+      let data = null;
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (e) {
+          // Response claimed to be JSON but wasn't - handle gracefully
+          data = null;
+        }
+      }
+
+      if (!response.ok) {
+        return {
+          success: false,
+          message: data?.message || 'Request failed',
+        };
       }
 
       return {

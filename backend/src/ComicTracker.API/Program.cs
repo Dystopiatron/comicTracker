@@ -84,6 +84,7 @@ builder.Services.AddScoped<IComicService, ComicService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
 
 // Controllers
 builder.Services.AddControllers();

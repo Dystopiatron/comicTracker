@@ -13,6 +13,7 @@ namespace comicTracker.Data
 
         public DbSet<Comic> Comics { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<WishlistItem> WishlistItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -91,6 +92,43 @@ namespace comicTracker.Data
 
                 entity.HasIndex(e => e.Token);
                 entity.HasIndex(e => new { e.UserId, e.IsRevoked });
+            });
+
+            // Configure WishlistItem entity
+            builder.Entity<WishlistItem>(entity =>
+            {
+                entity.HasKey(w => w.Id);
+                
+                entity.Property(w => w.SeriesName)
+                    .IsRequired()
+                    .HasMaxLength(200);
+                
+                entity.Property(w => w.IssueNumber)
+                    .IsRequired()
+                    .HasMaxLength(50);
+                
+                entity.Property(w => w.Publisher)
+                    .HasMaxLength(100);
+                
+                entity.Property(w => w.DesiredCondition)
+                    .HasConversion<string>();
+                
+                entity.Property(w => w.TargetPrice)
+                    .HasColumnType("decimal(18,2)");
+                
+                entity.Property(w => w.Notes)
+                    .HasMaxLength(1000);
+                
+                // Configure relationship
+                entity.HasOne(w => w.User)
+                    .WithMany(u => u.WishlistItems)
+                    .HasForeignKey(w => w.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                // Index for better performance
+                entity.HasIndex(w => w.UserId);
+                entity.HasIndex(w => w.SeriesName);
+                entity.HasIndex(w => w.Priority);
             });
 
             // Seed some initial data for demo purposes

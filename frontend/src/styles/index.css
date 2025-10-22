@@ -4,15 +4,16 @@
 @import './App.css';
 
 /* Component Styles */
+@import './components/cards.css';
 @import './components/Header.css';
 @import './components/Footer.css';
 @import './components/Forms.css';
-@import './components/ComicCard.css';
 @import './components/Modal.css';
 @import './components/Loading.css';
 @import './components/Alert.css';
 @import './components/Statistics.css';
 @import './components/Profile.css';
+@import './components/Wishlist.css';
 
 /* Page Styles */
 @import './pages/HomePage.css';

@@ -55,6 +55,13 @@ namespace comicTracker.Controllers
                     .ToListAsync();
 
                 var userDtos = _mapper.Map<List<UserDto>>(users);
+                
+                // Populate RoleDisplayName for each user
+                foreach (var userDto in userDtos)
+                {
+                    userDto.RoleDisplayName = _rolePermissionService.GetRoleDisplayName(userDto.Role);
+                }
+                
                 return Ok(ApiResponse<List<UserDto>>.SuccessResponse(userDtos, "Users retrieved successfully"));
             }
             catch (Exception ex)

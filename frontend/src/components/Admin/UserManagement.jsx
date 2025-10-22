@@ -179,16 +179,14 @@ const UserManagement = () => {
                           <div className="me-2">👤</div>
                           <div>
                             <div className="fw-bold">{user.username || user.email || 'Unknown User'}</div>
-                            {(user.isAdmin || (user.role && user.role !== 'User')) && (
-                              <span className={`badge mt-1 ${
-                                user.role === 'SuperAdmin' ? 'bg-danger' :
-                                user.role === 'Admin' ? 'bg-warning text-dark' :
-                                user.role === 'Moderator' ? 'bg-info' :
-                                'bg-warning text-dark'
-                              }`}>
-                                {user.roleDisplayName || user.role || 'Admin'}
-                              </span>
-                            )}
+                            <span className={`badge mt-1 ${
+                              user.role === 3 ? 'bg-danger' :
+                              user.role === 2 ? 'bg-warning text-dark' :
+                              user.role === 1 ? 'bg-info' :
+                              'bg-secondary'
+                            }`}>
+                              {user.roleDisplayName || 'Unknown Role'}
+                            </span>
                           </div>
                         </div>
                       </td>

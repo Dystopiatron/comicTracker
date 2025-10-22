@@ -24,7 +24,7 @@ Create a **React frontend application** that interfaces with the existing Comic 
 - **Build Tool**: Create React App or Vite
 
 ### API Integration Details
-- **Base API URL**: `http://localhost:5000`
+- **Base API URL**: `http://localhost:8000`
 - **Authentication**: JWT Bearer tokens stored in localStorage
 - **CORS**: Already configured on backend for `http://localhost:3000`
 
@@ -205,7 +205,7 @@ const useAuth = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   
   const login = async (credentials) => {
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+    const response = await fetch('http://localhost:8000/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials)
@@ -233,7 +233,7 @@ const useAuth = () => {
 ### API Service Example
 ```javascript
 // services/api.js
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'http:///api';
 
 const apiClient = {
   get: async (endpoint) => {

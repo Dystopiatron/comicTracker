@@ -48,6 +48,25 @@ namespace comicTracker.Profiles
                 .ForMember(dest => dest.DateAdded, opt => opt.Ignore())
                 .ForMember(dest => dest.DateModified, opt => opt.Ignore())
                 .ForMember(dest => dest.User, opt => opt.Ignore());
+
+            // Wishlist mappings
+            CreateMap<WishlistItem, WishlistItemDto>()
+                .ForMember(dest => dest.DesiredCondition, opt => opt.MapFrom(src => src.DesiredCondition.ToString()));
+            
+            CreateMap<CreateWishlistItemRequest, WishlistItem>()
+                .ConstructUsing(_ => new WishlistItem())
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                .ForMember(dest => dest.DateAdded, opt => opt.Ignore())
+                .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore());
+            
+            CreateMap<UpdateWishlistItemRequest, WishlistItem>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                .ForMember(dest => dest.DateAdded, opt => opt.Ignore())
+                .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore());
         }
     }
 }

@@ -33,3 +33,21 @@ export const PUBLISHERS = [
   'Valiant',
   'Other'
 ];
+
+// Wishlist priority constants
+export const WISHLIST_PRIORITIES = [
+  { value: 1, label: 'Highest Priority', color: '#dc3545' },
+  { value: 2, label: 'High Priority', color: '#fd7e14' },
+  { value: 3, label: 'Medium Priority', color: '#ffc107' },
+  { value: 4, label: 'Low Priority', color: '#6c757d' }
+];
+
+// Wishlist sort options
+export const WISHLIST_SORT_OPTIONS = [
+  { value: 'seriesname', label: 'Series Name' },
+  { value: 'issuenumber', label: 'Issue Number' },
+  { value: 'priority', label: 'Priority' },
+  { value: 'targetprice', label: 'Target Price' },
+  { value: 'publisher', label: 'Publisher' },
+  { value: 'dateadded', label: 'Date Added' }
+];
