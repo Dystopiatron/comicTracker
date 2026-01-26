@@ -88,25 +88,30 @@ A full-stack web application for comic book collectors to manage their collectio
 comicTracker/
 ├── backend/
 │   └── src/
-│       └── ComicTracker.API/
-│           ├── Controllers/     # API endpoints
-│           ├── Data/            # Database context
-│           ├── DTOs/            # Data transfer objects
-│           ├── Middleware/      # Custom middleware
-│           ├── Migrations/      # EF Core migrations
-│           ├── Models/          # Entity models
-│           ├── Profiles/        # AutoMapper profiles
-│           └── Services/        # Business logic
-├── frontend/
-│   └── src/
-│       ├── components/          # Reusable UI components
-│       ├── context/             # React Context providers
-│       ├── hooks/               # Custom React hooks
-│       ├── pages/               # Page components
-│       ├── services/            # API service layer
-│       └── styles/              # CSS stylesheets
-├── docs/                        # Documentation
-└── sql/                         # Database scripts
+│       └── ComicTracker.API/  # Main API project
+├── frontend/             # React application
+├── docs/                 # Documentation
+├── README.md            # This file
+└── .gitignore           # Git ignore rules
+```
+
+## 🌟 **Quick Start for Instructors**
+
+### Option 1: GitHub Codespaces (⚡ One-Click Testing)
+1. Click the green **"Code"** button above
+2. Select **"Codespaces"** → **"Create codespace on Base_Branch"**
+3. Wait for the environment to load (2-3 minutes)
+4. In the terminal, run: `./start-app.sh`
+5. Open `http://localhost:3000` when prompted
+
+### Option 2: Local Setup
+**Prerequisites:** .NET 8 SDK, Node.js 18+
+
+```bash
+# Clone and setup
+git clone https://github.com/Dystopiatron/comicTracker.git
+cd comicTracker
+./start-app.sh
 ```
 
 ## 📡 API Endpoints
@@ -159,4 +164,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Anthony Williams**
 
-- GitHub: [@aowill](https://github.com/aowill)
+This project is licensed under the MIT License.
