@@ -1,7 +1,7 @@
 /* Header Component Styles */
 .site-header {
-  background-color: var(--white);
-  border-bottom: 1px solid var(--border-color);
+  background-color: #e19b04ea;
+  border-bottom: 1px solid #e7a109;
   padding: 1rem 0;
 }
 
@@ -18,7 +18,7 @@
 .logo-title {
   margin: 0;
   font-size: 1.5rem;
-  color: var(--primary-color);
+  color: #1f2937;
 }
 
 .header-nav {
