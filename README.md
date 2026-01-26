@@ -22,7 +22,7 @@ comicTracker/
 
 ### Option 1: GitHub Codespaces (⚡ One-Click Testing)
 1. Click the green **"Code"** button above
-2. Select **"Codespaces"** → **"Create codespace on main"**
+2. Select **"Codespaces"** → **"Create codespace on Base_Branch"**
 3. Wait for the environment to load (2-3 minutes)
 4. In the terminal, run: `./start-app.sh`
 5. Open `http://localhost:3000` when prompted
