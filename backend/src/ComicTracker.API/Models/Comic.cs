@@ -42,5 +42,16 @@ namespace comicTracker.Models
         // Navigation property
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; } = null!;
+        
+        // ComicVine integration fields
+        /// <summary>
+        /// The ComicVine issue ID if this comic was imported from ComicVine
+        /// </summary>
+        public int? ComicVineId { get; set; }
+        
+        /// <summary>
+        /// Last time this comic's data was synced with ComicVine
+        /// </summary>
+        public DateTime? ComicVineLastSync { get; set; }
     }
 }

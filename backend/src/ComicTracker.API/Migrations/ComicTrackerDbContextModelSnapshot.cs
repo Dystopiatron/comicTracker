@@ -246,8 +246,8 @@ namespace comicTracker.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "16e830a7-8979-4ea8-957e-949cac4c9f28",
-                            DateCreated = new DateTime(2025, 10, 20, 18, 13, 23, 51, DateTimeKind.Utc).AddTicks(3150),
+                            ConcurrencyStamp = "308782e0-7a7b-4738-bf32-fc910bd60e70",
+                            DateCreated = new DateTime(2026, 1, 25, 23, 15, 37, 799, DateTimeKind.Utc).AddTicks(180),
                             Email = "demo@comictracker.com",
                             EmailConfirmed = true,
                             FirstName = "Demo",
@@ -255,10 +255,10 @@ namespace comicTracker.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DEMO@COMICTRACKER.COM",
                             NormalizedUserName = "DEMOUSER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMcwsASL6nd+tGWLFU5D0PMUZRmY9rfsCW5lz4LH3v4iMkNv8scpL7s2aJpQ18LXjA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPEmn7W8zvqRB391PEKZcYOEDNRfNmN+RbJhwHXrFQf/B1Ybf/XuarmObii0HRAG9Q==",
                             PhoneNumberConfirmed = false,
                             Role = "User",
-                            SecurityStamp = "6827ef9d-d4af-4e3c-9c7c-7570698309e9",
+                            SecurityStamp = "439496a9-b20e-4e3a-9e74-a89b7dc98811",
                             TwoFactorEnabled = false,
                             UserName = "demouser"
                         },
@@ -266,8 +266,8 @@ namespace comicTracker.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37efb8cc-0d8d-468c-92b4-16fdc7550056",
-                            DateCreated = new DateTime(2025, 10, 20, 18, 13, 23, 84, DateTimeKind.Utc).AddTicks(7000),
+                            ConcurrencyStamp = "56d2134d-103b-445d-87e1-220b37935d21",
+                            DateCreated = new DateTime(2026, 1, 25, 23, 15, 37, 831, DateTimeKind.Utc).AddTicks(4820),
                             Email = "fan@comictracker.com",
                             EmailConfirmed = true,
                             FirstName = "Comic",
@@ -275,10 +275,10 @@ namespace comicTracker.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "FAN@COMICTRACKER.COM",
                             NormalizedUserName = "COMICFAN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJbnWOujkJpkc2bvbUyKoig/ojsgjVVloxAHskJ92jsvT7g0SrBzRqBDUSiBZWRBzQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIuNgeOwoHKnlVFYwZXLnMTSpQKyUfa4h7o6QOuHobWQ8JSMdebmL1+6tlOhwkjHuw==",
                             PhoneNumberConfirmed = false,
                             Role = "Admin",
-                            SecurityStamp = "95996cc7-2369-46dc-a0e4-e59ca9c2de4c",
+                            SecurityStamp = "580163a0-711b-4db9-8276-3566fb3e8e91",
                             TwoFactorEnabled = false,
                             UserName = "comicfan"
                         });
@@ -291,6 +291,12 @@ namespace comicTracker.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ComicVineId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ComicVineLastSync")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Condition")
                         .IsRequired()
@@ -345,7 +351,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 1,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 9, 20, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6660),
+                            DateAdded = new DateTime(2025, 12, 26, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(680),
                             IssueNumber = "#300",
                             Notes = "First appearance of Venom",
                             Publisher = "Marvel",
@@ -357,7 +363,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 2,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 9, 25, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6660),
+                            DateAdded = new DateTime(2025, 12, 31, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(680),
                             IssueNumber = "#1",
                             Notes = "Classic Batman issue",
                             Publisher = "DC",
@@ -369,7 +375,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 3,
                             Condition = "Mint",
-                            DateAdded = new DateTime(2025, 9, 30, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6660),
+                            DateAdded = new DateTime(2026, 1, 5, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(680),
                             IssueNumber = "#1",
                             Notes = "First issue of the series",
                             Publisher = "Image",
@@ -381,7 +387,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 4,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 5, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6660),
+                            DateAdded = new DateTime(2026, 1, 10, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(690),
                             IssueNumber = "#1",
                             Notes = "First X-Men comic",
                             Publisher = "Marvel",
@@ -393,7 +399,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 5,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 10, 10, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6670),
+                            DateAdded = new DateTime(2026, 1, 15, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(690),
                             IssueNumber = "#1",
                             Notes = "Man of Steel",
                             Publisher = "DC",
@@ -405,7 +411,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 6,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 7, 12, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6670),
+                            DateAdded = new DateTime(2025, 10, 17, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(690),
                             IssueNumber = "#300",
                             Notes = "Classic black suit issue",
                             Publisher = "Marvel",
@@ -417,7 +423,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 7,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 7, 17, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6670),
+                            DateAdded = new DateTime(2025, 10, 22, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(690),
                             IssueNumber = "#1",
                             Notes = "Iconic Joker story",
                             Publisher = "DC",
@@ -429,7 +435,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 8,
                             Condition = "Mint",
-                            DateAdded = new DateTime(2025, 7, 22, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6670),
+                            DateAdded = new DateTime(2025, 10, 27, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(690),
                             IssueNumber = "#1",
                             Notes = "First issue of acclaimed series",
                             Publisher = "Image",
@@ -441,7 +447,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 9,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 7, 27, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6670),
+                            DateAdded = new DateTime(2025, 11, 1, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(700),
                             IssueNumber = "#1",
                             Notes = "Seminal graphic novel",
                             Publisher = "DC",
@@ -453,7 +459,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 10,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 8, 1, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6680),
+                            DateAdded = new DateTime(2025, 11, 6, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(700),
                             IssueNumber = "#1",
                             Notes = "First zombie apocalypse issue",
                             Publisher = "Image",
@@ -465,7 +471,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 11,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 8, 6, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6680),
+                            DateAdded = new DateTime(2025, 11, 11, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(700),
                             IssueNumber = "#141",
                             Notes = "Days of Future Past begins",
                             Publisher = "Marvel",
@@ -477,7 +483,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 12,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 8, 11, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6680),
+                            DateAdded = new DateTime(2025, 11, 16, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(700),
                             IssueNumber = "#1",
                             Notes = "Hellboy's first appearance",
                             Publisher = "Dark Horse",
@@ -489,7 +495,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 13,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 8, 16, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6680),
+                            DateAdded = new DateTime(2025, 11, 21, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(700),
                             IssueNumber = "#1",
                             Notes = "First TMNT appearance",
                             Publisher = "Mirage Studios",
@@ -501,7 +507,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 14,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 8, 21, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6680),
+                            DateAdded = new DateTime(2025, 11, 26, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(700),
                             IssueNumber = "#1",
                             Notes = "Neil Gaiman masterpiece",
                             Publisher = "Vertigo",
@@ -513,7 +519,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 15,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 8, 26, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6680),
+                            DateAdded = new DateTime(2025, 12, 1, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(710),
                             IssueNumber = "#1",
                             Notes = "Post-apocalyptic drama",
                             Publisher = "Vertigo",
@@ -525,7 +531,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 16,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 8, 31, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6690),
+                            DateAdded = new DateTime(2025, 12, 6, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(710),
                             IssueNumber = "#1",
                             Notes = "Jeff Smith's epic fantasy",
                             Publisher = "Cartoon Books",
@@ -537,7 +543,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 17,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 9, 5, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6690),
+                            DateAdded = new DateTime(2025, 12, 11, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(710),
                             IssueNumber = "#1",
                             Notes = "Pulitzer Prize winner",
                             Publisher = "Pantheon Books",
@@ -549,7 +555,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 18,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 9, 10, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6690),
+                            DateAdded = new DateTime(2025, 12, 16, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(710),
                             IssueNumber = "#1",
                             Notes = "Garth Ennis classic",
                             Publisher = "Vertigo",
@@ -561,7 +567,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 19,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 9, 15, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6690),
+                            DateAdded = new DateTime(2025, 12, 21, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(710),
                             IssueNumber = "#1",
                             Notes = "Robert Kirkman superhero saga",
                             Publisher = "Image",
@@ -573,7 +579,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 20,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 9, 20, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6690),
+                            DateAdded = new DateTime(2025, 12, 26, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(710),
                             IssueNumber = "#48",
                             Notes = "First Silver Surfer",
                             Publisher = "Marvel",
@@ -585,7 +591,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 21,
                             Condition = "Good",
-                            DateAdded = new DateTime(2025, 9, 25, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6690),
+                            DateAdded = new DateTime(2025, 12, 31, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(720),
                             IssueNumber = "#1",
                             Notes = "Alan Moore dystopian tale",
                             Publisher = "Vertigo",
@@ -597,7 +603,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 22,
                             Condition = "Fair",
-                            DateAdded = new DateTime(2025, 9, 30, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6700),
+                            DateAdded = new DateTime(2026, 1, 5, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(720),
                             IssueNumber = "#181",
                             Notes = "First Wolverine appearance",
                             Publisher = "Marvel",
@@ -609,7 +615,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 23,
                             Condition = "VeryFine",
-                            DateAdded = new DateTime(2025, 10, 5, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6700),
+                            DateAdded = new DateTime(2026, 1, 10, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(720),
                             IssueNumber = "#1",
                             Notes = "Katsuhiro Otomo cyberpunk",
                             Publisher = "Marvel Epic",
@@ -621,7 +627,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 24,
                             Condition = "NearMint",
-                            DateAdded = new DateTime(2025, 10, 10, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6700),
+                            DateAdded = new DateTime(2026, 1, 15, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(720),
                             IssueNumber = "#1",
                             Notes = "Todd McFarlane creation",
                             Publisher = "Image",
@@ -633,7 +639,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 25,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 15, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6700),
+                            DateAdded = new DateTime(2026, 1, 20, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(720),
                             IssueNumber = "#1",
                             Notes = "Warren Ellis cyberpunk journalism",
                             Publisher = "Vertigo",
@@ -645,7 +651,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 26,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 16, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6700),
+                            DateAdded = new DateTime(2026, 1, 21, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(720),
                             IssueNumber = "#2",
                             Notes = "On the Stump. Spider Jerusalem covers a political rally.",
                             Publisher = "Vertigo",
@@ -657,7 +663,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 27,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 17, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6710),
+                            DateAdded = new DateTime(2026, 1, 22, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(730),
                             IssueNumber = "#3",
                             Notes = "Wild in the Country. Spider investigates cryogenic revivals.",
                             Publisher = "Vertigo",
@@ -669,7 +675,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 28,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 18, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6710),
+                            DateAdded = new DateTime(2026, 1, 23, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(730),
                             IssueNumber = "#4",
                             Notes = "New City. Spider explores the city's underbelly.",
                             Publisher = "Vertigo",
@@ -681,7 +687,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 29,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 19, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6710),
+                            DateAdded = new DateTime(2026, 1, 24, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(730),
                             IssueNumber = "#5",
                             Notes = "What Spider Watches on TV. Media criticism and satire.",
                             Publisher = "Vertigo",
@@ -693,7 +699,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 30,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 20, 18, 13, 23, 117, DateTimeKind.Utc).AddTicks(6710),
+                            DateAdded = new DateTime(2026, 1, 25, 23, 15, 37, 864, DateTimeKind.Utc).AddTicks(730),
                             IssueNumber = "#6",
                             Notes = "God Riding Shotgun. Spider investigates new religious movements.",
                             Publisher = "Vertigo",
@@ -705,7 +711,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 31,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 20, 19, 13, 23, 117, DateTimeKind.Utc).AddTicks(6710),
+                            DateAdded = new DateTime(2026, 1, 26, 0, 15, 37, 864, DateTimeKind.Utc).AddTicks(730),
                             IssueNumber = "#7",
                             Notes = "My Boyfriend is a Virus. Exploration of transhumanism.",
                             Publisher = "Vertigo",
@@ -717,7 +723,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 32,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 20, 20, 13, 23, 117, DateTimeKind.Utc).AddTicks(6710),
+                            DateAdded = new DateTime(2026, 1, 26, 1, 15, 37, 864, DateTimeKind.Utc).AddTicks(740),
                             IssueNumber = "#8",
                             Notes = "Another Cold Morning. More on cryogenic revivals and societal change.",
                             Publisher = "Vertigo",
@@ -729,7 +735,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 33,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 20, 21, 13, 23, 117, DateTimeKind.Utc).AddTicks(6720),
+                            DateAdded = new DateTime(2026, 1, 26, 2, 15, 37, 864, DateTimeKind.Utc).AddTicks(740),
                             IssueNumber = "#9",
                             Notes = "Party Time. Spider attends a political convention.",
                             Publisher = "Vertigo",
@@ -741,7 +747,7 @@ namespace comicTracker.Migrations
                         {
                             Id = 34,
                             Condition = "Fine",
-                            DateAdded = new DateTime(2025, 10, 20, 22, 13, 23, 117, DateTimeKind.Utc).AddTicks(6720),
+                            DateAdded = new DateTime(2026, 1, 26, 3, 15, 37, 864, DateTimeKind.Utc).AddTicks(740),
                             IssueNumber = "#10",
                             Notes = "Freeze Me with Your Kiss. Exploration of future cryogenic technology.",
                             Publisher = "Vertigo",

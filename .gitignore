@@ -25,6 +25,10 @@ Thumbs.db
 **/.env.test.local
 **/.env.production.local
 
+# ASP.NET Core secrets (contains API keys)
+**/appsettings.Development.json
+**/appsettings.*.local.json
+
 # Logs
 **/logs/
 *.log

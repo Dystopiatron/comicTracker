@@ -6,7 +6,7 @@ Full-stack comic collection management application with React frontend and ASP.N
 ## Tech Stack
 - **Frontend**: React 19.2.0 (JavaScript), Bootstrap CSS
 - **Backend**: ASP.NET Core 9.0 Web API
-- **Database**: SQLite with Entity Framework Core
+- **Database**: PostgreSQL with Entity Framework Core
 - **Authentication**: JWT Bearer tokens
 
 ## Local Development Setup
@@ -14,24 +14,37 @@ Full-stack comic collection management application with React frontend and ASP.N
 ### Prerequisites
 - Node.js 18+ 
 - .NET 9.0 SDK
+- PostgreSQL 15+
 - Git
 
 ### Quick Start
 1. Clone the repository:
    ```bash
-   git clone git@github.com:Dystopiatron/comicTracker.git
+   git clone https://github.com/aowill/comicTracker.git
    cd comicTracker
    ```
 
-2. Run the development script:
+2. Set up PostgreSQL database:
    ```bash
-   chmod +x dev-start.sh
-   ./dev-start.sh
+   psql -U postgres -c "CREATE DATABASE comictracker;"
    ```
 
-3. Access the application:
+3. Configure the backend:
+   ```bash
+   cd backend/src/ComicTracker.API
+   cp appsettings.Development.json.example appsettings.Development.json
+   # Edit the connection string in appsettings.Development.json
+   ```
+
+4. Run the development script:
+   ```bash
+   chmod +x start-app.sh
+   ./start-app.sh
+   ```
+
+5. Access the application:
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
+   - Backend API: https://localhost:5001
 
 ### Manual Setup
 
@@ -96,20 +109,23 @@ REACT_APP_API_URL=https://your-backend-url.com
 
 ## Production Considerations
 
-1. **Database**: Replace SQLite with PostgreSQL/SQL Server for production
+1. **Database**: Already using PostgreSQL - ensure production instance is properly secured
 2. **File Storage**: Use cloud storage for cover images
 3. **JWT Secret**: Use strong, random secret key
 4. **CORS**: Configure for production domains
 5. **HTTPS**: Ensure SSL certificates are configured
+6. **ComicVine API**: Configure API key in production environment variables
 
 ## Key Features
 - ✅ User authentication & registration
 - ✅ Comic collection management (CRUD)
+- ✅ ComicVine API integration
+- ✅ Wishlist management
 - ✅ User profile editing
 - ✅ Search and filtering
 - ✅ Statistics dashboard
+- ✅ Role-based access control
 - ✅ Responsive design
-- ✅ TypeScript-free React codebase
 
 ## Project Structure
 ```
