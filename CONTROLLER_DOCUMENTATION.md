@@ -1,7 +1,7 @@
 # Controller Architecture Documentation
 
 ## Overview
-This application uses 7 controllers, each with a specific responsibility following the Single Responsibility Principle and RESTful API design.
+This application uses 8 controllers, each with a specific responsibility following the Single Responsibility Principle and RESTful API design.
 
 ## Controller Breakdown
 
@@ -74,6 +74,22 @@ This application uses 7 controllers, each with a specific responsibility followi
 - DELETE /api/wishlist/{id} - Remove from wishlist
 
 **Why it exists:** Post-MVP feature requested to track desired comics
+
+### 8. ComicVineController.cs (External Catalog)
+**Purpose:** Search the ComicVine database and import an issue into the signed-in user's collection
+**Endpoints:**
+- GET /api/comicvine/status - Whether an API key is configured
+- GET /api/comicvine/search - Search ComicVine resources
+- GET /api/comicvine/search/issues - Search issues
+- GET /api/comicvine/search/volumes - Search volumes (series)
+- GET /api/comicvine/issue/{id} - Issue details
+- GET /api/comicvine/volume/{id} - Volume details
+- GET /api/comicvine/volume/{id}/issues - Issues in a volume
+- GET /api/comicvine/character/{id} - Character details
+- POST /api/comicvine/import - Import an issue into the user's collection (authenticated)
+
+**Why it exists:** Lets collectors pull real comic metadata instead of typing every field
+**Configuration:** Requires `ComicVine:ApiKey` from user-secrets or the `ComicVine__ApiKey` environment variable. The key is not stored in source.
 
 ## Design Principles
 

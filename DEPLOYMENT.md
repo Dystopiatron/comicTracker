@@ -101,10 +101,13 @@ REACT_APP_API_URL=https://your-backend-url.com
 3. **JWT Secret**: Use strong, random secret key
 4. **CORS**: Configure for production domains
 5. **HTTPS**: Ensure SSL certificates are configured
+6. **ComicVine API**: Set `ComicVine__ApiKey` in the host environment. Do not commit the key. The app runs without it; search and import stay disabled until the key is present.
 
 ## Key Features
 - ✅ User authentication & registration
 - ✅ Comic collection management (CRUD)
+- ✅ ComicVine search and import (when an API key is configured)
+- ✅ Wishlist management
 - ✅ User profile editing
 - ✅ Search and filtering
 - ✅ Statistics dashboard
