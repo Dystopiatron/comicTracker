@@ -99,6 +99,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IComicService, ComicService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IDemoUserService, DemoUserService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
 
@@ -203,6 +204,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ComicTrackerDbContext>();
     var adminService = scope.ServiceProvider.GetRequiredService<IAdminService>();
+    var demoUserService = scope.ServiceProvider.GetRequiredService<IDemoUserService>();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     
     try
@@ -221,6 +223,17 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         logger.LogError(ex, "An error occurred while creating/updating the database or seeding admin user.");
+    }
+
+    try
+    {
+        // Kept outside the admin setup try. EnsureCreated can leave the schema in place
+        // and then Migrate throws, which would otherwise skip this seed. Admin seeding is unchanged.
+        await demoUserService.EnsureDemoUserExistsAsync();
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred while seeding the demo user.");
     }
 }
 

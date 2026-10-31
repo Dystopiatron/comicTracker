@@ -108,6 +108,7 @@
 
 /* Demo Credentials Alert Specific */
 .demo-alert {
+  display: block;
   background-color: var(--gray-50);
   border-color: var(--border-color);
   color: var(--gray-700);

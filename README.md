@@ -59,14 +59,16 @@ The old admin password and JWT signing key used to be committed. They remain in 
 
 In Development, if `JwtSettings:SecretKey` is missing or shorter than 32 bytes, the API generates a random key for that process only and logs a warning, so `dotnet run` still starts. Tokens from that key stop working after a restart. In any other environment, startup fails until a long enough key is configured.
 
-Optional non-admin demo login for the React app: create `frontend/.env.local` (gitignored) with a regular user, not an admin account.
+A public, non-admin demo account is seeded on startup when `DemoUser:Enabled` is true (the default): username `demo`, email `demo@example.com`, password `DemoUser123!`. It is a normal user and is never given the admin role. Seeding is skipped if that username already exists, and it does not change admin seeding. Override the username, email, or password with `DemoUser:Username`, `DemoUser:Email`, and `DemoUser:Password` (or `DemoUser__Username`, `DemoUser__Email`, and `DemoUser__Password`). Set `DemoUser:Enabled` to false, or `DemoUser__Enabled=false`, to skip seeding. A few sample comics are added only when that user is first created.
+
+The login page **Try the demo** button signs in with those same dummy credentials. They are a public demo account, not an admin. Override the button with `frontend/.env.local` (gitignored):
 
 ```bash
-REACT_APP_DEMO_USERNAME=your-demo-username
-REACT_APP_DEMO_PASSWORD=your-demo-password
+REACT_APP_DEMO_USERNAME=demo
+REACT_APP_DEMO_PASSWORD=DemoUser123!
 ```
 
-The login page shows "Use demo account" only when both values are set. This project uses Create React App, so the variables must start with `REACT_APP_`.
+This project uses Create React App, so the variables must start with `REACT_APP_`. When they are omitted, the button uses `demo` / `DemoUser123!`.
 
 ## ✅ **MVP Requirements Fulfilled**
 
@@ -86,12 +88,13 @@ The login page shows "Use demo account" only when both values are set. This proj
 ## 🧪 **Testing Instructions**
 
 ### Pre-seeded Test Accounts:
+- **Demo login**: `demo` / `DemoUser123!` (public non-admin account, seeded on startup; or click **Try the demo** on the login page)
 - **Regular User**: `demouser` / `Demo123!`
 - **Admin User**: no default password. Set `Admin:Username` and `Admin:Password` (see [Local setup secrets](#local-setup-secrets)). If that username does not already exist, it is created on startup.
 
 ### Test Scenario Walkthrough:
 1. **Registration Test**: Click "Register" → Create new account → Auto-login
-2. **Login Test**: Use demo credentials above
+2. **Login Test**: Click **Try the demo**, or use the demo credentials above
 3. **Add Comic Test**: "Add New Comic" → Fill form → Save → Verify in collection
 4. **View Collection Test**: Navigate to "Collection" → See all comics with details
 5. **Edit Comic Test**: Click edit icon → Modify details → Save → Verify changes

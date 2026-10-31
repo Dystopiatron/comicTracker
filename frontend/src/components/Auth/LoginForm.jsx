@@ -4,6 +4,11 @@ import { useAuth } from '../../context/AuthContext';
 import Button from '../Common/Button';
 import ErrorMessage from '../Common/ErrorMessage';
 
+// Public, non-admin demo account. These dummy credentials are intentionally committed.
+// Override with REACT_APP_DEMO_USERNAME and REACT_APP_DEMO_PASSWORD.
+const DEFAULT_DEMO_USERNAME = 'demo';
+const DEFAULT_DEMO_PASSWORD = 'DemoUser123!';
+
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({
     username: '',
@@ -17,9 +22,8 @@ const LoginForm = () => {
   const location = useLocation();
   
   const from = location.state?.from?.pathname || '/';
-  const demoUsername = process.env.REACT_APP_DEMO_USERNAME;
-  const demoPassword = process.env.REACT_APP_DEMO_PASSWORD;
-  const hasDemoLogin = Boolean(demoUsername && demoPassword);
+  const demoUsername = process.env.REACT_APP_DEMO_USERNAME || DEFAULT_DEMO_USERNAME;
+  const demoPassword = process.env.REACT_APP_DEMO_PASSWORD || DEFAULT_DEMO_PASSWORD;
 
   const handleInputChange = ( e) => {
     const { name, value } = e.target;
@@ -48,15 +52,27 @@ const LoginForm = () => {
     }
   };
 
-  const handleDemoLogin = () => {
-    if (!hasDemoLogin) {
-      return;
-    }
-
-    setCredentials({
+  const handleDemoLogin = async () => {
+    const demoCredentials = {
       username: demoUsername,
       password: demoPassword
-    });
+    };
+    setCredentials(demoCredentials);
+    setLoading(true);
+    setError('');
+
+    try {
+      const result = await login(demoCredentials);
+      if (result.success) {
+        navigate(from, { replace: true });
+      } else {
+        setError(result.message);
+      }
+    } catch (err) {
+      setError('Demo login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,17 +83,25 @@ const LoginForm = () => {
           <p className="text-muted">Access your comic collection</p>
         </div>
 
-        {hasDemoLogin && (
-          <div className="text-center mb-3">
-            <button
-              type="button"
-              onClick={handleDemoLogin}
-              className="btn btn-outline btn-sm"
-            >
-              Use demo account
-            </button>
+        <div className="alert demo-alert mb-3">
+          <strong>Public demo</strong>
+          <div className="mt-2">
+            Non-admin account
+            <div>Username: <code className="demo-credentials">{demoUsername}</code></div>
+            <div>Password: <code className="demo-credentials">{demoPassword}</code></div>
           </div>
-        )}
+        </div>
+
+        <div className="text-center mb-3">
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            className="btn btn-outline"
+            disabled={loading}
+          >
+            Try the demo
+          </button>
+        </div>
 
         {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
