@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Cryptography;
 using System.Text;
 using comicTracker.Data;
 using comicTracker.Models;
@@ -40,8 +41,23 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
 .AddDefaultTokenProviders();
 
 // JWT Authentication
+const int MinimumJwtKeyBytes = 32;
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"];
+var generatedEphemeralJwtKey = false;
+
+if (string.IsNullOrWhiteSpace(secretKey) || Encoding.UTF8.GetByteCount(secretKey) < MinimumJwtKeyBytes)
+{
+    if (!builder.Environment.IsDevelopment())
+    {
+        throw new InvalidOperationException(
+            "JWT signing key is missing or too short. Set JwtSettings:SecretKey to a value of at least 32 bytes using user-secrets or the JwtSettings__SecretKey environment variable. The application will not start without it.");
+    }
+
+    secretKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(MinimumJwtKeyBytes));
+    builder.Configuration["JwtSettings:SecretKey"] = secretKey;
+    generatedEphemeralJwtKey = true;
+}
 
 builder.Services.AddAuthentication(options =>
 {
@@ -148,6 +164,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+if (generatedEphemeralJwtKey)
+{
+    app.Logger.LogWarning(
+        "JwtSettings:SecretKey is missing or shorter than {MinimumJwtKeyBytes} bytes. Generated a random ephemeral signing key for this Development process. Tokens will be invalid after restart. Set a stable key with user-secrets (JwtSettings:SecretKey) or the JwtSettings__SecretKey environment variable.",
+        MinimumJwtKeyBytes);
+}
 
 // Configure the HTTP request pipeline.
 
