@@ -90,7 +90,7 @@ npm start
 
 ### Demo Credentials
 - **User:** `demouser` / `Demo123!`
-- **Admin:** `comicfan` / `MyComics2024`
+- **Admin:** no default password. Configure `Admin:Username` and `Admin:Password` locally (see the main README, "Local setup secrets").
 
 ---
 

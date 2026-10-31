@@ -169,7 +169,8 @@ namespace comicTracker.Data
                 Role = UserRole.Admin,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
-            comicFanUser.PasswordHash = hasher.HashPassword(comicFanUser, "MyComics2024");
+            // Password verifier already stored by migrations. Do not embed a plaintext password.
+            comicFanUser.PasswordHash = "AQAAAAIAAYagAAAAEJbnWOujkJpkc2bvbUyKoig/ojsgjVVloxAHskJ92jsvT7g0SrBzRqBDUSiBZWRBzQ==";
 
             builder.Entity<ApplicationUser>().HasData(demoUser, comicFanUser);
 

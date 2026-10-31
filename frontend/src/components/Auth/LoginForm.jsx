@@ -17,6 +17,9 @@ const LoginForm = () => {
   const location = useLocation();
   
   const from = location.state?.from?.pathname || '/';
+  const demoUsername = process.env.REACT_APP_DEMO_USERNAME;
+  const demoPassword = process.env.REACT_APP_DEMO_PASSWORD;
+  const hasDemoLogin = Boolean(demoUsername && demoPassword);
 
   const handleInputChange = ( e) => {
     const { name, value } = e.target;
@@ -46,9 +49,13 @@ const LoginForm = () => {
   };
 
   const handleDemoLogin = () => {
+    if (!hasDemoLogin) {
+      return;
+    }
+
     setCredentials({
-      username: 'comicfan',
-      password: 'MyComics2024'
+      username: demoUsername,
+      password: demoPassword
     });
   };
 
@@ -60,23 +67,17 @@ const LoginForm = () => {
           <p className="text-muted">Access your comic collection</p>
         </div>
 
-        <div className="alert alert-info">
-          <strong>Demo Credentials:</strong>
-          <div className="mt-2">
-            <div className="mb-1">Username: <code>comicfan</code></div>
-            <div className="mb-1">Password: <code>MyComics2024</code></div>
+        {hasDemoLogin && (
+          <div className="text-center mb-3">
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+              className="btn btn-outline btn-sm"
+            >
+              Use demo account
+            </button>
           </div>
-        </div>
-
-        <div className="text-center mb-3">
-          <button 
-            type="button" 
-            onClick={handleDemoLogin}
-            className="btn btn-outline btn-sm"
-          >
-            Use Demo Credentials
-          </button>
-        </div>
+        )}
 
         {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 

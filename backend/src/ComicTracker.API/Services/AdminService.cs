@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using comicTracker.Models;
 
 namespace comicTracker.Services
@@ -7,11 +6,16 @@ namespace comicTracker.Services
     public class AdminService : IAdminService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
         private readonly ILogger<AdminService> _logger;
 
-        public AdminService(UserManager<ApplicationUser> userManager, ILogger<AdminService> logger)
+        public AdminService(
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration,
+            ILogger<AdminService> logger)
         {
             _userManager = userManager;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -19,25 +23,54 @@ namespace comicTracker.Services
         {
             try
             {
-                // Check if any admin users exist
-                var adminExists = await _userManager.Users.AnyAsync(u => u.Role >= UserRole.Admin);
-                
-                if (!adminExists)
+                var username = _configuration["Admin:Username"]?.Trim();
+                var password = _configuration["Admin:Password"];
+                var email = _configuration["Admin:Email"]?.Trim();
+
+                if (string.IsNullOrWhiteSpace(password))
                 {
-                    // Create default admin user
-                    var result = await CreateAdminUserAsync("comicfan", "fan@comictracker.com", "Admin123!");
-                    if (result)
+                    _logger.LogWarning(
+                        "Skipping admin user seed because Admin:Password is not configured. Set Admin:Username and Admin:Password with user-secrets or the environment variables Admin__Username and Admin__Password. No default admin password is used.");
+                    return false;
+                }
+
+                if (string.IsNullOrWhiteSpace(username))
+                {
+                    _logger.LogWarning(
+                        "Skipping admin user seed because Admin:Username is not configured. Set Admin:Username and Admin:Password with user-secrets or the environment variables Admin__Username and Admin__Password.");
+                    return false;
+                }
+
+                var existing = await _userManager.FindByNameAsync(username);
+                if (existing != null)
+                {
+                    if (existing.Role < UserRole.Admin)
                     {
-                        _logger.LogInformation("Default admin user created successfully");
-                        return true;
+                        _logger.LogWarning(
+                            "User {Username} already exists and is not an admin. Admin seed skipped and the account was not modified.",
+                            username);
                     }
                     else
                     {
-                        _logger.LogError("Failed to create default admin user");
-                        return false;
+                        _logger.LogInformation("Admin user {Username} already exists. Admin seed skipped.", username);
                     }
+
+                    return true;
                 }
 
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    email = $"{username}@localhost";
+                }
+
+                var created = await CreateAdminUserAsync(username, email, password);
+                if (!created)
+                {
+                    _logger.LogError("Failed to create admin user {Username} from configuration", username);
+                    return false;
+                }
+
+                _logger.LogInformation("Admin user {Username} created from configuration", username);
                 return true;
             }
             catch (Exception ex)

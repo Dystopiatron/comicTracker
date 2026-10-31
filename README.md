@@ -37,6 +37,37 @@ cd comicTracker
 ./start-app.sh
 ```
 
+## Local setup secrets
+
+Do not commit secrets. `appsettings.json` and `appsettings.Development.json` keep `JwtSettings:SecretKey` empty. Put local values in user-secrets or environment variables.
+
+From `backend/src/ComicTracker.API`:
+
+```bash
+dotnet user-secrets set "JwtSettings:SecretKey" "replace-with-a-random-string-at-least-32-characters"
+dotnet user-secrets set "Admin:Username" "your-admin-username"
+dotnet user-secrets set "Admin:Password" "your-admin-password"
+dotnet user-secrets set "Admin:Email" "you@example.com"
+dotnet user-secrets set "ComicVine:ApiKey" "your-comicvine-api-key"
+```
+
+The same settings can be supplied as environment variables: `JwtSettings__SecretKey`, `Admin__Username`, `Admin__Password`, `Admin__Email`, and `ComicVine__ApiKey`.
+
+If `Admin:Password` is not set, startup skips creating an admin user and logs a warning. There is no default admin password. `Admin:Email` is optional; when it is omitted, the seeded account uses `<username>@localhost`.
+
+The old admin password and JWT signing key used to be committed. They remain in git history and should be treated as compromised. Change any real account that reused that password. Databases created from the existing migrations may still contain a seeded `comicfan` admin; do not keep using that account.
+
+In Development, if `JwtSettings:SecretKey` is missing or shorter than 32 bytes, the API generates a random key for that process only and logs a warning, so `dotnet run` still starts. Tokens from that key stop working after a restart. In any other environment, startup fails until a long enough key is configured.
+
+Optional non-admin demo login for the React app: create `frontend/.env.local` (gitignored) with a regular user, not an admin account.
+
+```bash
+REACT_APP_DEMO_USERNAME=your-demo-username
+REACT_APP_DEMO_PASSWORD=your-demo-password
+```
+
+The login page shows "Use demo account" only when both values are set. This project uses Create React App, so the variables must start with `REACT_APP_`.
+
 ## ✅ **MVP Requirements Fulfilled**
 
 ### 🔐 Authentication
@@ -56,7 +87,7 @@ cd comicTracker
 
 ### Pre-seeded Test Accounts:
 - **Regular User**: `demouser` / `Demo123!`
-- **Admin User**: `comicfan` / `MyComics2024`
+- **Admin User**: no default password. Set `Admin:Username` and `Admin:Password` (see [Local setup secrets](#local-setup-secrets)). If that username does not already exist, it is created on startup.
 
 ### Test Scenario Walkthrough:
 1. **Registration Test**: Click "Register" → Create new account → Auto-login

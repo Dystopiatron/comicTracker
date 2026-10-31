@@ -19,11 +19,14 @@
 Thumbs.db
 
 # Environment files
+.env
 **/.env
+*.env.local
 **/.env.local
 **/.env.development.local
 **/.env.test.local
 **/.env.production.local
+appsettings.*.local.json
 
 # Logs
 **/logs/

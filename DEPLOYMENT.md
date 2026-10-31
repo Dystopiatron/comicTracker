@@ -51,8 +51,8 @@ npm start
 ```
 
 ## Demo Credentials
-- **User 1**: comicfan / MyComics2024
-- **User 2**: demouser / Demo123!
+- **Regular user**: demouser / Demo123!
+- **Admin**: no default password. Set `Admin__Username` and `Admin__Password` (see the README section "Local setup secrets").
 - **User 3**: Shazam / Shazam123!
 
 ## Deployment Options
