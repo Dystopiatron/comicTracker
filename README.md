@@ -71,6 +71,8 @@ cd comicTracker
 
 - **User Authentication**: JWT-based authentication with registration and login
 - **Comic Management**: Full CRUD operations for comic collections
+- **ComicVine Integration**: Search the ComicVine database and import issues into a collection (optional API key)
+- **Wishlist**: Track comics you want and convert them into owned issues
 - **Advanced Search & Filtering**: Search by series, issue, publisher, or condition
 - **Collection Statistics**: Comprehensive analytics including total value and breakdowns
 - **Responsive Design**: Works on desktop and mobile devices
@@ -86,6 +88,16 @@ The backend is organized with:
 - **Models**: Domain entities
 - **DTOs**: Data transfer objects
 
+### ComicVine API key
+
+ComicVine search is optional. The committed config files leave the key blank. From `backend/src/ComicTracker.API`:
+
+```bash
+dotnet user-secrets set "ComicVine:ApiKey" "your-api-key-here"
+```
+
+Or set the `ComicVine__ApiKey` environment variable. Get a free key at https://comicvine.gamespot.com/api/. Do not commit the key. See `docs/COMICVINE_INTEGRATION.md`.
+
 ### Frontend Development
 
 The React frontend uses:
@@ -96,6 +108,8 @@ The React frontend uses:
 
 ## 🚀 **Bonus Features (Beyond MVP)**
 
+- 📚 **ComicVine Import**: Search and import real comic data when an API key is configured
+- ⭐ **Wishlist**: Save wanted issues and convert them into the collection
 - 📊 **Statistics Dashboard**: Collection analytics and visual charts
 - 🔍 **Advanced Search**: Filter by publisher, condition, price range
 - 👑 **Admin Panel**: User management and system statistics
@@ -125,6 +139,7 @@ This project **fully meets and exceeds** all MVP requirements with professional-
 ## Documentation
 
 Additional documentation can be found in the `docs/` directory:
+- [ComicVine integration](docs/COMICVINE_INTEGRATION.md)
 - API implementation details
 - Frontend development guide
 - Copilot prompts and instructions

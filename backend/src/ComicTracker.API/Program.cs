@@ -86,6 +86,14 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
 
+// ComicVine API. The key is read from configuration (user-secrets, env ComicVine__ApiKey, or appsettings). Do not commit a real key.
+builder.Services.Configure<ComicVineSettings>(builder.Configuration.GetSection(ComicVineSettings.SectionName));
+builder.Services.AddHttpClient("ComicVine", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
+builder.Services.AddScoped<IComicVineService, ComicVineService>();
+
 // Controllers
 builder.Services.AddControllers();
 

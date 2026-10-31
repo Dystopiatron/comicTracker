@@ -1,0 +1,23 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Database=comictracker_dev;Username=groundcontrol;Port=5432"
+  },
+  "JwtSettings": {
+    "SecretKey": "ComicTracker-Development-JWT-Key-For-Local-Development-Only-256-Bits-Minimum",
+    "Issuer": "ComicTrackerAPI-Dev",
+    "Audience": "ComicTrackerClient-Dev",
+    "ExpirationMinutes": 120
+  },
+  "ComicVine": {
+    "ApiKey": "",
+    "UserAgent": "ComicTracker-Dev/1.0"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Information",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information",
+      "comicTracker": "Debug"
+    }
+  }
+}

@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>comictracker-api-7c3e1a9b-4d2f-4e8a-9b61-comicvine</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
