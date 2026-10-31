@@ -1,0 +1,66 @@
+/* Add Comic Page Styles */
+
+.add-comic-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-button {
+  padding: 12px 24px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.tab-button:hover {
+  color: var(--primary-color, #1a73e8);
+}
+
+.tab-button.active {
+  color: var(--primary-color, #1a73e8);
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary-color, #1a73e8);
+}
+
+.tab-content {
+  padding-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .add-comic-tabs {
+    flex-direction: column;
+    border-bottom: none;
+    gap: 8px;
+  }
+
+  .tab-button {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: left;
+  }
+
+  .tab-button.active {
+    border-color: var(--primary-color, #1a73e8);
+    background-color: #e8f0fe;
+  }
+
+  .tab-button.active::after {
+    display: none;
+  }
+}

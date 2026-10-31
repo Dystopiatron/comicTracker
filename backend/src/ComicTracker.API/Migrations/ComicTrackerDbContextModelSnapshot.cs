@@ -292,6 +292,12 @@ namespace comicTracker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("ComicVineId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ComicVineLastSync")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Condition")
                         .IsRequired()
                         .HasColumnType("text");
